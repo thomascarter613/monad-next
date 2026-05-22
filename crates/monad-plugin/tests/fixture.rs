@@ -10,7 +10,7 @@ use monad_plugin::wire::{LogLevel, LogParams, LogStream};
 use monad_plugin::{Client, NoopNotifier, Notifier, PROTOCOL_VERSION};
 
 fn fixture_path() -> std::path::PathBuf {
-    std::path::PathBuf::from(env!("CARGO_BIN_EXE_profile-plugin-fixture"))
+    std::path::PathBuf::from(env!("CARGO_BIN_EXE_monad-plugin-fixture"))
 }
 
 fn spawn_with(scenario: &str) -> anyhow::Result<Client> {

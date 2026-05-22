@@ -10,7 +10,7 @@
 //!  * `emit-logs`       — handshake ok, next request → 2 log notifs + result.
 //!
 //! Not part of the published monad binary surface — only built so tests
-//! can `env!("CARGO_BIN_EXE_profile-plugin-fixture")`.
+//! can `env!("CARGO_BIN_EXE_monad-plugin-fixture")`.
 
 use std::io::{BufReader, Write};
 
