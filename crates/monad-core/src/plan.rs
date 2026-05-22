@@ -1708,11 +1708,11 @@ units = ["apps/api"]"#,
         // `[[notifications]]` in unit.toml: each entry resolves to a
         // Notify-kind task so the executor fans it out like Slack /
         // Linear notifications do.
-        use monad_config::GarnishSpec;
+        use monad_config::NotificationSpec;
 
         let unit = UnitConfig {
             name: "d".into(),
-            notifications: vec![GarnishSpec {
+            notifications: vec![NotificationSpec {
                 name: "github-comment".into(),
                 run: "./notify.sh".into(),
                 env: vec!["GITHUB_TOKEN".into()],
@@ -1746,7 +1746,7 @@ units = ["apps/api"]"#,
         // A user-declared `[tasks.<name>]` for a notification's name
         // takes over the run command while keeping the synthetic
         // Notify kind + no_cache semantics intact.
-        use monad_config::{GarnishSpec, Task};
+        use monad_config::{NotificationSpec, Task};
 
         let mut tasks = BTreeMap::new();
         tasks.insert(
@@ -1763,7 +1763,7 @@ units = ["apps/api"]"#,
         let unit = UnitConfig {
             name: "d".into(),
             tasks,
-            notifications: vec![GarnishSpec {
+            notifications: vec![NotificationSpec {
                 name: "my-notify".into(),
                 run: "original.sh".into(),
                 env: vec![],

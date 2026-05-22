@@ -10,7 +10,7 @@ mod workspace;
 pub use error::ConfigError;
 pub use schema::{
     ProfileConfig, CacheConfig, ContainerMode, Defaults, UnitConfig, Environment, ExecutionConfig,
-    GarnishSpec, GhaCache, PluginsConfig, RepoConfig, ServeConfig, Task, TelemetryConfig,
+    NotificationSpec, GhaCache, PluginsConfig, RepoConfig, ServeConfig, Task, TelemetryConfig,
     ToolchainPin,
 };
 pub use workspace::{LoadedProfile, LoadedUnit, Workspace};

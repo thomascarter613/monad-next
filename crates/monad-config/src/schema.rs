@@ -282,7 +282,7 @@ pub struct UnitConfig {
     /// required_env = ["GITHUB_TOKEN"]
     /// ```
     #[serde(default)]
-    pub notifications: Vec<GarnishSpec>,
+    pub notifications: Vec<NotificationSpec>,
 }
 
 /// One custom-script notification declared in `unit.toml`'s `[[notifications]]`
@@ -290,7 +290,7 @@ pub struct UnitConfig {
 /// Deploy in the unit.
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
-pub struct GarnishSpec {
+pub struct NotificationSpec {
     /// Task name surfaced in the ExecutionReport. Must be unique
     /// within the unit (collides with integration-emitted names like
     /// `slack:notify` the same way user `[tasks.<name>]` does — the

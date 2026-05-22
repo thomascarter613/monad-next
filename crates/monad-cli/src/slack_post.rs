@@ -174,14 +174,14 @@ fn post_to_slack(url: &str, msg: &SlackMessage<'_>) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use monad_core::{NotificationPayload, GarnishPayloadTrigger, GARNISH_PAYLOAD_SCHEMA_VERSION};
+    use monad_core::{NotificationPayload, NotificationPayloadTrigger, NOTIFICATION_PAYLOAD_SCHEMA_VERSION};
 
     fn sample_payload(outcome: &str, output: &str, stderr: Option<&str>) -> NotificationPayload {
         NotificationPayload {
-            schema_version: GARNISH_PAYLOAD_SCHEMA_VERSION,
+            schema_version: NOTIFICATION_PAYLOAD_SCHEMA_VERSION,
             monad_version: "test".into(),
             environment: Some("staging".into()),
-            trigger: GarnishPayloadTrigger {
+            trigger: NotificationPayloadTrigger {
                 task_name: "railway:deploy".into(),
                 unit_name: "admin".into(),
                 monad_name: "prod".into(),

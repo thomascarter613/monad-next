@@ -134,196 +134,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
 
 [[package]]
-name = "monad-adapter-noop"
-version = "0.1.2"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "monad-adapters"
-version = "0.1.2"
-dependencies = [
- "anyhow",
- "monad-adapter-noop",
- "monad-plugin",
- "schemars",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 1.0.69",
- "toml",
- "tracing",
- "walkdir",
-]
-
-[[package]]
-name = "monad-cache"
-version = "0.1.2"
-dependencies = [
- "anyhow",
- "monad-cas-protocol",
- "blake3",
- "bytes",
- "dirs",
- "futures",
- "globset",
- "keyring",
- "object_store",
- "reqwest",
- "schemars",
- "serde",
- "serde_json",
- "tar",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
- "tracing",
- "url",
- "walkdir",
- "wiremock",
-]
-
-[[package]]
-name = "monad-cas-protocol"
-version = "0.1.2"
-dependencies = [
- "schemars",
- "serde",
- "serde_json",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "monad-cli"
-version = "0.1.2"
-dependencies = [
- "anyhow",
- "monad-adapters",
- "monad-cache",
- "monad-config",
- "monad-core",
- "monad-watch",
- "clap",
- "dirs",
- "globset",
- "schemars",
- "semver",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
- "toml",
- "toml_edit",
- "tracing",
- "tracing-subscriber",
- "ureq",
- "walkdir",
- "which",
-]
-
-[[package]]
-name = "monad-config"
-version = "0.1.2"
-dependencies = [
- "anyhow",
- "serde",
- "tempfile",
- "thiserror 1.0.69",
- "toml",
-]
-
-[[package]]
-name = "monad-core"
-version = "0.1.2"
-dependencies = [
- "anyhow",
- "base64",
- "monad-adapters",
- "monad-cache",
- "monad-cas-protocol",
- "monad-config",
- "monad-toolchain",
- "blake3",
- "dirs",
- "globset",
- "schemars",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 1.0.69",
- "toml",
- "tracing",
- "ureq",
- "walkdir",
-]
-
-[[package]]
-name = "monad-mcp"
-version = "0.1.2"
-dependencies = [
- "anyhow",
- "monad-config",
- "monad-core",
- "clap",
- "rmcp",
- "schemars",
- "serde",
- "serde_json",
- "tempfile",
- "tokio",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "monad-plugin"
-version = "0.1.2"
-dependencies = [
- "anyhow",
- "libc",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 1.0.69",
- "tracing",
-]
-
-[[package]]
-name = "monad-toolchain"
-version = "0.1.2"
-dependencies = [
- "anyhow",
- "monad-adapters",
- "monad-config",
- "dirs",
- "flate2",
- "semver",
- "serde",
- "serde_json",
- "sha2",
- "tar",
- "tempfile",
- "thiserror 1.0.69",
- "tracing",
- "ureq",
-]
-
-[[package]]
-name = "monad-watch"
-version = "0.1.2"
-dependencies = [
- "anyhow",
- "globset",
- "notify",
- "tempfile",
- "thiserror 1.0.69",
- "tracing",
-]
-
-[[package]]
 name = "bitflags"
 version = "1.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1446,6 +1256,196 @@ dependencies = [
  "libc",
  "wasi",
  "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "monad-adapter-noop"
+version = "0.1.2"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "monad-adapters"
+version = "0.1.2"
+dependencies = [
+ "anyhow",
+ "monad-adapter-noop",
+ "monad-plugin",
+ "schemars",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 1.0.69",
+ "toml",
+ "tracing",
+ "walkdir",
+]
+
+[[package]]
+name = "monad-cache"
+version = "0.1.2"
+dependencies = [
+ "anyhow",
+ "blake3",
+ "bytes",
+ "dirs",
+ "futures",
+ "globset",
+ "keyring",
+ "monad-cas-protocol",
+ "object_store",
+ "reqwest",
+ "schemars",
+ "serde",
+ "serde_json",
+ "tar",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
+ "tracing",
+ "url",
+ "walkdir",
+ "wiremock",
+]
+
+[[package]]
+name = "monad-cas-protocol"
+version = "0.1.2"
+dependencies = [
+ "schemars",
+ "serde",
+ "serde_json",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "monad-cli"
+version = "0.1.2"
+dependencies = [
+ "anyhow",
+ "clap",
+ "dirs",
+ "globset",
+ "monad-adapters",
+ "monad-cache",
+ "monad-config",
+ "monad-core",
+ "monad-watch",
+ "schemars",
+ "semver",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
+ "toml",
+ "toml_edit",
+ "tracing",
+ "tracing-subscriber",
+ "ureq",
+ "walkdir",
+ "which",
+]
+
+[[package]]
+name = "monad-config"
+version = "0.1.2"
+dependencies = [
+ "anyhow",
+ "serde",
+ "tempfile",
+ "thiserror 1.0.69",
+ "toml",
+]
+
+[[package]]
+name = "monad-core"
+version = "0.1.2"
+dependencies = [
+ "anyhow",
+ "base64",
+ "blake3",
+ "dirs",
+ "globset",
+ "monad-adapters",
+ "monad-cache",
+ "monad-cas-protocol",
+ "monad-config",
+ "monad-toolchain",
+ "schemars",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 1.0.69",
+ "toml",
+ "tracing",
+ "ureq",
+ "walkdir",
+]
+
+[[package]]
+name = "monad-mcp"
+version = "0.1.2"
+dependencies = [
+ "anyhow",
+ "clap",
+ "monad-config",
+ "monad-core",
+ "rmcp",
+ "schemars",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "monad-plugin"
+version = "0.1.2"
+dependencies = [
+ "anyhow",
+ "libc",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tracing",
+]
+
+[[package]]
+name = "monad-toolchain"
+version = "0.1.2"
+dependencies = [
+ "anyhow",
+ "dirs",
+ "flate2",
+ "monad-adapters",
+ "monad-config",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tar",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tracing",
+ "ureq",
+]
+
+[[package]]
+name = "monad-watch"
+version = "0.1.2"
+dependencies = [
+ "anyhow",
+ "globset",
+ "notify",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tracing",
 ]
 
 [[package]]

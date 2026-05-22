@@ -291,14 +291,14 @@ fn graphql(api_key: &str, query: &str, variables: serde_json::Value) -> Result<s
 #[cfg(test)]
 mod tests {
     use super::*;
-    use monad_core::{NotificationPayload, GarnishPayloadTrigger, GARNISH_PAYLOAD_SCHEMA_VERSION};
+    use monad_core::{NotificationPayload, NotificationPayloadTrigger, NOTIFICATION_PAYLOAD_SCHEMA_VERSION};
 
     fn payload_with(output: &str, task_name: &str) -> NotificationPayload {
         NotificationPayload {
-            schema_version: GARNISH_PAYLOAD_SCHEMA_VERSION,
+            schema_version: NOTIFICATION_PAYLOAD_SCHEMA_VERSION,
             monad_version: "test".into(),
             environment: Some("prod".into()),
-            trigger: GarnishPayloadTrigger {
+            trigger: NotificationPayloadTrigger {
                 task_name: task_name.into(),
                 unit_name: "admin".into(),
                 monad_name: "prod".into(),

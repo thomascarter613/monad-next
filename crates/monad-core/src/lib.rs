@@ -23,7 +23,7 @@ pub mod why;
 pub use diff::GitDiff;
 pub use discovery::{scan_orphan_unites, scan_orphans};
 pub use doctor::{CheckStatus, DoctorCheck, DoctorReport, DoctorSummary};
-pub use notification::{NotificationPayload, GarnishPayloadTrigger, GARNISH_PAYLOAD_SCHEMA_VERSION};
+pub use notification::{NotificationPayload, NotificationPayloadTrigger, NOTIFICATION_PAYLOAD_SCHEMA_VERSION};
 pub use graph::{build as build_graph, ProfileGraph, GraphError};
 pub use plan::{
     default_cache_root, find_workspace_root, plan_at, MissReason, Plan, PlanOptions, PlannedProfile,

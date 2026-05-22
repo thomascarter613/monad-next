@@ -1762,10 +1762,10 @@ fn build_notification_payload(
         TaskOutcome::DeployUnchanged { .. } => ("deploy_unchanged", 0, None),
     };
     crate::NotificationPayload {
-        schema_version: crate::GARNISH_PAYLOAD_SCHEMA_VERSION,
+        schema_version: crate::NOTIFICATION_PAYLOAD_SCHEMA_VERSION,
         monad_version: env!("CARGO_PKG_VERSION").to_string(),
         environment: environment.map(str::to_string),
-        trigger: crate::GarnishPayloadTrigger {
+        trigger: crate::NotificationPayloadTrigger {
             task_name: deploy.name.clone(),
             unit_name: unit_name.to_string(),
             monad_name: monad_name.to_string(),
@@ -5029,7 +5029,7 @@ run = "printf 'hello from build'"
             .unwrap_or_else(|e| panic!("payload not valid JSON: {e} / {payload_bytes:?}"));
         assert_eq!(
             payload.schema_version,
-            crate::GARNISH_PAYLOAD_SCHEMA_VERSION
+            crate::NOTIFICATION_PAYLOAD_SCHEMA_VERSION
         );
         assert_eq!(payload.environment.as_deref(), Some("staging"));
         assert_eq!(payload.trigger.task_name, "mock:deploy");

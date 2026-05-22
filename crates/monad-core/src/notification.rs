@@ -18,7 +18,7 @@ use serde::{Deserialize, Serialize};
 
 /// Current `NotificationPayload.schema_version`. Bump only on a change that
 /// existing notify consumers couldn't handle transparently.
-pub const GARNISH_PAYLOAD_SCHEMA_VERSION: u32 = 1;
+pub const NOTIFICATION_PAYLOAD_SCHEMA_VERSION: u32 = 1;
 
 /// The structured JSON object delivered to Notify-kind tasks on stdin.
 /// Shape is stable across patch/minor releases within the same
@@ -41,14 +41,14 @@ pub struct NotificationPayload {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub environment: Option<String>,
     /// The completed task that triggered this notification.
-    pub trigger: GarnishPayloadTrigger,
+    pub trigger: NotificationPayloadTrigger,
 }
 
 /// Identity and outcome of the task that caused a notification to fire.
 /// Everything a notify script might want to template into a message
 /// or use for deduping/idempotence.
 #[derive(Debug, Clone, Serialize, Deserialize, JsonSchema, PartialEq)]
-pub struct GarnishPayloadTrigger {
+pub struct NotificationPayloadTrigger {
     /// Task name as declared by the integration / user — e.g.
     /// `railway:deploy`, `railway:deploy:landing-page`, `vercel:deploy`.
     /// Pick this over `integration_kind` when you want to present a
@@ -111,10 +111,10 @@ mod tests {
     #[test]
     fn roundtrips_through_serde() {
         let p = NotificationPayload {
-            schema_version: GARNISH_PAYLOAD_SCHEMA_VERSION,
+            schema_version: Notification_PAYLOAD_SCHEMA_VERSION,
             monad_version: "0.1.0".into(),
             environment: Some("staging".into()),
-            trigger: GarnishPayloadTrigger {
+            trigger: NotificationPayloadTrigger {
                 task_name: "railway:deploy".into(),
                 unit_name: "admin".into(),
                 monad_name: "prod".into(),
@@ -136,10 +136,10 @@ mod tests {
     #[test]
     fn omits_none_fields_from_json() {
         let p = NotificationPayload {
-            schema_version: GARNISH_PAYLOAD_SCHEMA_VERSION,
+            schema_version: Notification_PAYLOAD_SCHEMA_VERSION,
             monad_version: "0.1.0".into(),
             environment: None,
-            trigger: GarnishPayloadTrigger {
+            trigger: NotificationPayloadTrigger {
                 task_name: "x:deploy".into(),
                 unit_name: "d".into(),
                 monad_name: "b".into(),
