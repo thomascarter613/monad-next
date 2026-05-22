@@ -74,7 +74,7 @@ const MAX_DEPTH: usize = 4;
 /// `monad unit add .` separately. Returns units in deterministic order
 /// (sorted by relative path) so generated configs are stable across
 /// machines.
-pub fn detect_unites(root: &Path, registry: &AdapterRegistry) -> Vec<DetectedUnit> {
+pub fn detect_units(root: &Path, registry: &AdapterRegistry) -> Vec<DetectedUnit> {
     let mut out: Vec<DetectedUnit> = Vec::new();
     walk(root, root, 1, registry, &mut out);
     out.sort_by(|a, b| a.rel.cmp(&b.rel));
@@ -550,7 +550,7 @@ mod tests {
         write(root.path(), "apps/web/package-lock.json", "{}");
 
         let registry = AdapterRegistry::builtin();
-        let detected = detect_unites(root.path(), &registry);
+        let detected = detect_units(root.path(), &registry);
         let langs: Vec<_> = detected
             .iter()
             .map(|d| (d.rel.as_str(), d.language.as_str()))
@@ -572,7 +572,7 @@ mod tests {
         write(root.path(), "node_modules/foo/package-lock.json", "{}");
         write(root.path(), "apps/api/vendor/bar/go.mod", "module bar\n");
 
-        let detected = detect_unites(root.path(), &AdapterRegistry::builtin());
+        let detected = detect_units(root.path(), &AdapterRegistry::builtin());
         let rels: Vec<_> = detected.iter().map(|d| d.rel.as_str()).collect();
         assert_eq!(rels, vec!["apps/api"]);
     }
@@ -586,7 +586,7 @@ mod tests {
         write(root.path(), "apps/api/web/package.json", r#"{"name":"x"}"#);
         write(root.path(), "apps/api/web/package-lock.json", "{}");
 
-        let detected = detect_unites(root.path(), &AdapterRegistry::builtin());
+        let detected = detect_units(root.path(), &AdapterRegistry::builtin());
         assert_eq!(detected.len(), 1);
         assert_eq!(detected[0].rel, "apps/api");
     }
@@ -596,7 +596,7 @@ mod tests {
         let root = tempfile::tempdir().unwrap();
         write(root.path(), "go.mod", "module x\n\ngo 1.22\n");
 
-        let detected = detect_unites(root.path(), &AdapterRegistry::builtin());
+        let detected = detect_units(root.path(), &AdapterRegistry::builtin());
         // Root-level go.mod isn't auto-detected — user runs `monad unit add .`.
         assert!(detected.is_empty());
     }
@@ -605,7 +605,7 @@ mod tests {
     fn detect_captures_toolchain_pin() {
         let root = tempfile::tempdir().unwrap();
         write(root.path(), "apps/api/go.mod", "module x\n\ngo 1.22.3\n");
-        let detected = detect_unites(root.path(), &AdapterRegistry::builtin());
+        let detected = detect_units(root.path(), &AdapterRegistry::builtin());
         assert_eq!(detected[0].toolchain, Some(("go".into(), "1.22.3".into())));
     }
 
@@ -674,7 +674,7 @@ mod tests {
     }
 
     #[test]
-    fn render_prod_toml_lists_unites() {
+    fn render_prod_toml_lists_units() {
         let body = render_prod_toml(&["apps/api".into(), "apps/web".into()]);
         assert!(body.contains("\"apps/api\""));
         assert!(body.contains("\"apps/web\""));
@@ -912,7 +912,7 @@ mod tests {
         write(tmp.path(), "apps/web/package-lock.json", "{}");
 
         let registry = AdapterRegistry::builtin();
-        let detected = detect_unites(tmp.path(), &registry);
+        let detected = detect_units(tmp.path(), &registry);
         write_unit_tomls(&detected, &registry).unwrap();
 
         let unit_toml = std::fs::read_to_string(tmp.path().join("apps/web/unit.toml")).unwrap();

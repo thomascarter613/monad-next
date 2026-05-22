@@ -33,9 +33,9 @@ pub struct Workspace {
     /// Profiles keyed by name.
     pub profiles: BTreeMap<String, LoadedProfile>,
     /// Unites keyed by their relative path from `root` (e.g. `"apps/api"`).
-    pub unites_by_path: BTreeMap<PathBuf, LoadedUnit>,
+    pub units_by_path: BTreeMap<PathBuf, LoadedUnit>,
     /// Unites keyed by `UnitConfig.name`.
-    pub unites_by_name: BTreeMap<String, LoadedUnit>,
+    pub units_by_name: BTreeMap<String, LoadedUnit>,
 }
 
 impl Workspace {
@@ -49,14 +49,14 @@ impl Workspace {
     pub fn load(root: &Path) -> Result<Self, ConfigError> {
         let repo = load_repo_config(root)?;
         let profiles = load_profiles(root)?;
-        let UnitIndex { by_path, by_name } = load_unites(root, &profiles)?;
+        let UnitIndex { by_path, by_name } = load_units(root, &profiles)?;
 
         Ok(Workspace {
             root: root.to_path_buf(),
             repo,
             profiles,
-            unites_by_path: by_path,
-            unites_by_name: by_name,
+            units_by_path: by_path,
+            units_by_name: by_name,
         })
     }
 }
@@ -114,7 +114,7 @@ struct UnitIndex {
     by_name: BTreeMap<String, LoadedUnit>,
 }
 
-fn load_unites(
+fn load_units(
     root: &Path,
     profiles: &BTreeMap<String, LoadedProfile>,
 ) -> Result<UnitIndex, ConfigError> {
@@ -230,14 +230,14 @@ mod tests {
         assert_eq!(ws.repo.defaults.parallelism, 4);
         assert_eq!(ws.profiles.len(), 1);
         assert_eq!(ws.profiles["prod"].config.units.len(), 2);
-        assert_eq!(ws.unites_by_path.len(), 2);
-        assert_eq!(ws.unites_by_name.len(), 2);
+        assert_eq!(ws.units_by_path.len(), 2);
+        assert_eq!(ws.units_by_name.len(), 2);
 
-        let api = &ws.unites_by_name["sample-api"];
+        let api = &ws.units_by_name["sample-api"];
         assert_eq!(api.config.language.as_deref(), Some("go"));
         assert_eq!(api.rel, PathBuf::from("apps/api"));
 
-        let web = &ws.unites_by_name["sample-web"];
+        let web = &ws.units_by_name["sample-web"];
         assert_eq!(web.config.depends_on, vec!["sample-api"]);
     }
 
@@ -357,6 +357,6 @@ units = ["apps/api"]"#,
 
         let ws = Workspace::load(tmp.path()).unwrap();
         assert_eq!(ws.profiles.len(), 2);
-        assert_eq!(ws.unites_by_name.len(), 1);
+        assert_eq!(ws.units_by_name.len(), 1);
     }
 }

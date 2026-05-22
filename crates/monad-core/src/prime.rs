@@ -16,7 +16,7 @@ use serde::Serialize;
 
 use monad_config::Workspace;
 
-use crate::{plan_at, scan_orphan_unites, MissReason, PlanOptions, TaskStatus};
+use crate::{plan_at, scan_orphan_units, MissReason, PlanOptions, TaskStatus};
 
 #[derive(Debug, Clone, Serialize, JsonSchema)]
 pub struct Output {
@@ -27,7 +27,7 @@ pub struct Output {
     /// Workspace-relative paths of `unit.toml` files on disk that aren't
     /// referenced by any monad. Mirrors the `orphans` field of
     /// `monad unit list --json`.
-    pub orphan_unites: Vec<String>,
+    pub orphan_units: Vec<String>,
     pub cache: CacheStatus,
     pub plan: PlanSnapshot,
     /// Ordered next-step suggestions. Agents should follow the first
@@ -101,20 +101,20 @@ pub struct PlanTask {
 /// task execution.
 pub fn compute(workspace: &Workspace) -> Result<Output> {
     let profiles = collect_profiles(workspace);
-    let units = collect_unites(workspace);
-    let orphan_unites: Vec<String> = scan_orphan_unites(workspace)
+    let units = collect_units(workspace);
+    let orphan_units: Vec<String> = scan_orphan_units(workspace)
         .into_iter()
         .map(|p| p.to_string_lossy().to_string())
         .collect();
     let cache = collect_cache(workspace);
     let plan = collect_plan(&workspace.root)?;
-    let recommended_next = recommend_next(workspace, &orphan_unites, &cache, &plan);
+    let recommended_next = recommend_next(workspace, &orphan_units, &cache, &plan);
 
     Ok(Output {
         workspace_root: workspace.root.display().to_string(),
         profiles,
         units,
-        orphan_unites,
+        orphan_units,
         cache,
         plan,
         recommended_next,
@@ -140,9 +140,9 @@ fn collect_profiles(ws: &Workspace) -> Vec<ProfileRef> {
     out
 }
 
-fn collect_unites(ws: &Workspace) -> Vec<UnitRef> {
+fn collect_units(ws: &Workspace) -> Vec<UnitRef> {
     let mut out: Vec<UnitRef> = ws
-        .unites_by_name
+        .units_by_name
         .values()
         .map(|d| {
             let rel = d.rel.to_string_lossy().to_string();
@@ -236,7 +236,7 @@ fn recommend_next(
     if ws.profiles.is_empty() {
         steps.push("run `monad box add <name>` to create your first monad".to_string());
     }
-    if ws.unites_by_name.is_empty() {
+    if ws.units_by_name.is_empty() {
         steps.push("run `monad unit add <path> --lang <lang>` to scaffold a unit".to_string());
     }
     if !orphans.is_empty() {
@@ -306,8 +306,8 @@ mod tests {
             root: tmp.path().to_path_buf(),
             repo: monad_config::RepoConfig::default(),
             profiles: Default::default(),
-            unites_by_path: Default::default(),
-            unites_by_name: Default::default(),
+            units_by_path: Default::default(),
+            units_by_name: Default::default(),
         }
     }
 
@@ -370,8 +370,8 @@ mod tests {
             root: tmp.path().to_path_buf(),
             repo: monad_config::RepoConfig::default(),
             profiles,
-            unites_by_path: Default::default(),
-            unites_by_name: units,
+            units_by_path: Default::default(),
+            units_by_name: units,
         };
         let plan = PlanSnapshot {
             preview: vec![],

@@ -285,17 +285,17 @@ fn classify_target_ref(err: &monad_core::TargetRefError) -> MonadError {
     match err {
         NotFound {
             available_profiles,
-            available_unites,
+            available_units,
             ..
         } => {
             let mut steps = Vec::new();
             if !available_profiles.is_empty() {
                 steps.push(format!("available profiles: {}", available_profiles.join(", ")));
             }
-            if !available_unites.is_empty() {
-                steps.push(format!("available units: {}", available_unites.join(", ")));
+            if !available_units.is_empty() {
+                steps.push(format!("available units: {}", available_units.join(", ")));
             }
-            if available_profiles.is_empty() && available_unites.is_empty() {
+            if available_profiles.is_empty() && available_units.is_empty() {
                 steps.push(
                     "this workspace has no profiles or units yet — run `monad init` \
                      or `monad unit add <path>`"
@@ -595,7 +595,7 @@ mod tests {
         let cause = monad_core::TargetRefError::NotFound {
             target: "api".into(),
             available_profiles: vec!["prod".into()],
-            available_unites: vec!["web".into(), "worker".into()],
+            available_units: vec!["web".into(), "worker".into()],
         };
         let err = anyhow::Error::new(cause);
         let b = classify(&err);
@@ -618,7 +618,7 @@ mod tests {
         let cause = monad_core::TargetRefError::NotFound {
             target: "anything".into(),
             available_profiles: vec![],
-            available_unites: vec![],
+            available_units: vec![],
         };
         let err = anyhow::Error::new(cause);
         let b = classify(&err);

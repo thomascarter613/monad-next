@@ -21,7 +21,7 @@ pub mod run;
 pub mod why;
 
 pub use diff::GitDiff;
-pub use discovery::{scan_orphan_unites, scan_orphans};
+pub use discovery::{scan_orphan_units, scan_orphans};
 pub use doctor::{CheckStatus, DoctorCheck, DoctorReport, DoctorSummary};
 pub use notification::{NotificationPayload, NotificationPayloadTrigger, NOTIFICATION_PAYLOAD_SCHEMA_VERSION};
 pub use graph::{build as build_graph, ProfileGraph, GraphError};

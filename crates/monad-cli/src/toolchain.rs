@@ -30,7 +30,7 @@ fn install_all(global: &GlobalFlags) -> Result<i32> {
 
     // Walk every unit, resolve, install when explicitly pinned.
     let mut planned: BTreeMap<(String, String), Vec<String>> = BTreeMap::new();
-    for (unit_path, unit) in &workspace.unites_by_path {
+    for (unit_path, unit) in &workspace.units_by_path {
         // Only consider units in at least one monad with this filter.
         if let Some(monad_filter) = &global.monad {
             let in_filtered_profile = workspace.profiles.values().any(|b| {

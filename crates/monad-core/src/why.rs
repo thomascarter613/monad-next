@@ -69,11 +69,11 @@ pub fn resolve_unit_task_key(workspace_root: &Path, target: &str) -> anyhow::Res
             })?;
 
     let workspace = Workspace::load(workspace_root)?;
-    let available_unites: Vec<String> = workspace.unites_by_name.keys().cloned().collect();
-    if !workspace.unites_by_name.contains_key(unit_name) {
+    let available_units: Vec<String> = workspace.units_by_name.keys().cloned().collect();
+    if !workspace.units_by_name.contains_key(unit_name) {
         return Err(WhyTargetError::UnitNotFound {
             unit: unit_name.to_string(),
-            available: available_unites,
+            available: available_units,
         }
         .into());
     }
@@ -117,12 +117,12 @@ pub fn resolve_unit_task_key(workspace_root: &Path, target: &str) -> anyhow::Res
             .into());
         }
     }
-    // Unit exists in unites_by_name but didn't appear in the plan — this
+    // Unit exists in units_by_name but didn't appear in the plan — this
     // shouldn't happen with the current planner, but keep the error
     // typed in case it ever does.
     Err(WhyTargetError::UnitNotFound {
         unit: unit_name.to_string(),
-        available: available_unites,
+        available: available_units,
     }
     .into())
 }

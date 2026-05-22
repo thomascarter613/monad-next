@@ -472,7 +472,7 @@ fn run_deploy(
     // that unit explicitly.
     let single_unit_preflight: Option<(String, Vec<String>)> =
         opts.unit_filter.as_ref().and_then(|name| {
-            workspace.unites_by_name.get(name).map(|d| {
+            workspace.units_by_name.get(name).map(|d| {
                 (
                     name.clone(),
                     d.config.integrations.keys().cloned().collect(),
@@ -910,7 +910,7 @@ fn run_serve(global: &GlobalFlags, monad_name: String) -> anyhow::Result<i32> {
     let mut targets: Vec<(monad_config::LoadedUnit, Vec<String>)> = Vec::new();
     for unit_ref in &monad.config.units {
         let loaded = workspace
-            .unites_by_path
+            .units_by_path
             .get(std::path::Path::new(unit_ref))
             .expect("workspace load guaranteed this")
             .clone();
@@ -1044,11 +1044,11 @@ fn run_dev(global: &GlobalFlags, unit_name: String) -> anyhow::Result<i32> {
     let root = resolve_workspace_root(global)?;
     let workspace = monad_config::Workspace::load(&root)?;
 
-    let Some(loaded) = workspace.unites_by_name.get(&unit_name) else {
+    let Some(loaded) = workspace.units_by_name.get(&unit_name) else {
         anyhow::bail!(
             "no unit named '{unit_name}' (known: {})",
             workspace
-                .unites_by_name
+                .units_by_name
                 .keys()
                 .map(String::as_str)
                 .collect::<Vec<_>>()
@@ -1140,11 +1140,11 @@ fn run_task(
     let root = resolve_workspace_root(global)?;
     let workspace = monad_config::Workspace::load(&root)?;
 
-    let Some(loaded) = workspace.unites_by_name.get(&unit_name) else {
+    let Some(loaded) = workspace.units_by_name.get(&unit_name) else {
         anyhow::bail!(
             "no unit named '{unit_name}' (known: {})",
             workspace
-                .unites_by_name
+                .units_by_name
                 .keys()
                 .map(String::as_str)
                 .collect::<Vec<_>>()
@@ -1211,7 +1211,7 @@ fn run_add(
     let unit_name = match unit {
         Some(n) => n,
         None => {
-            let units: Vec<&String> = workspace.unites_by_name.keys().collect();
+            let units: Vec<&String> = workspace.units_by_name.keys().collect();
             match units.as_slice() {
                 [single] => (*single).clone(),
                 [] => anyhow::bail!(
@@ -1230,11 +1230,11 @@ fn run_add(
         }
     };
 
-    let Some(loaded) = workspace.unites_by_name.get(&unit_name) else {
+    let Some(loaded) = workspace.units_by_name.get(&unit_name) else {
         anyhow::bail!(
             "no unit named '{unit_name}' (known: {})",
             workspace
-                .unites_by_name
+                .units_by_name
                 .keys()
                 .map(String::as_str)
                 .collect::<Vec<_>>()
@@ -1735,7 +1735,7 @@ fn run_init(global: &GlobalFlags, no_detect: bool) -> anyhow::Result<i32> {
     let detected = if no_detect {
         Vec::new()
     } else {
-        init::detect_unites(&cwd, &registry)
+        init::detect_units(&cwd, &registry)
     };
     let toolchains = init::merge_toolchains(&detected);
 
@@ -1804,7 +1804,7 @@ fn run_init(global: &GlobalFlags, no_detect: bool) -> anyhow::Result<i32> {
                 .iter()
                 .map(|p| p.display().to_string())
                 .collect::<Vec<_>>(),
-            "unites_detected": detected
+            "units_detected": detected
                 .iter()
                 .map(|d| serde_json::json!({
                     "name": d.name,
@@ -2032,7 +2032,7 @@ fn emit_graph_dot(workspace: &monad_config::Workspace, graphs: &[monad_core::Pro
 
 fn dep_list(workspace: &monad_config::Workspace, unit_name: &str) -> Vec<String> {
     workspace
-        .unites_by_name
+        .units_by_name
         .get(unit_name)
         .map(|loaded| loaded.config.depends_on.clone())
         .unwrap_or_default()

@@ -612,7 +612,7 @@ gha = "sometimes""#,
     }
 
     #[test]
-    fn monad_accepts_empty_unites() {
+    fn monad_accepts_empty_units() {
         // `monad init` generates an empty monad; making that valid lets
         // users run `monad plan` immediately after init without a
         // confusing config error.

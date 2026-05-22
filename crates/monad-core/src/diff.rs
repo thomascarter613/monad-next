@@ -234,7 +234,7 @@ mod tests {
     }
 
     #[test]
-    fn changed_dirs_matches_only_affected_unites() {
+    fn changed_dirs_matches_only_affected_units() {
         let tmp = init_repo();
         write(tmp.path(), "apps/api/main.go", "package main\n");
         write(tmp.path(), "apps/web/src/App.tsx", "export {};");

@@ -164,7 +164,7 @@ impl Planner {
     pub fn compute(&self, opts: &PlanOptions) -> Result<Plan> {
         let mut clean_dirs: Option<BTreeSet<PathBuf>> = None;
         if let (Some(base_ref), Some(diff)) = (&opts.since, &self.diff) {
-            let unit_rels: Vec<PathBuf> = self.workspace.unites_by_path.keys().cloned().collect();
+            let unit_rels: Vec<PathBuf> = self.workspace.units_by_path.keys().cloned().collect();
             let dirty = diff
                 .changed_dirs(base_ref, unit_rels.clone())
                 .with_context(|| format!("computing diff against {base_ref}"))?;
@@ -199,7 +199,7 @@ impl Planner {
                 let rel = PathBuf::from(unit_ref);
                 let loaded = self
                     .workspace
-                    .unites_by_path
+                    .units_by_path
                     .get(&rel)
                     .expect("workspace load guaranteed this");
                 if let Some(unit) = &opts.unit_filter {
@@ -227,7 +227,7 @@ impl Planner {
             });
         }
 
-        let orphans = crate::discovery::scan_orphan_unites(&self.workspace);
+        let orphans = crate::discovery::scan_orphan_units(&self.workspace);
 
         Ok(Plan {
             profiles: planned_profiles,
@@ -1003,7 +1003,7 @@ language = "node-npm""#,
     }
 
     #[test]
-    fn plan_produces_one_monad_two_unites() {
+    fn plan_produces_one_monad_two_units() {
         let tmp = two_unit_fixture();
         let (planner, _cache) = planner_with_fresh_cache(tmp.path());
 

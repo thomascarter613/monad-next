@@ -1,0 +1,773 @@
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 278 tests
+test bun::tests::default_tasks_use_bun_test ... ok
+test bun::tests::id_and_fingerprint ... ok
+test bun::tests::detect_also_accepts_legacy_bun_lockb ... ok
+test bun::tests::detected_tasks_uses_bun_run_prefix ... ok
+test bun::tests::install_probe_missing_without_node_modules ... ok
+test bun::tests::install_probe_missing_when_node_modules_empty ... ok
+test bun::tests::detect_prefers_bun_lock_text ... ok
+test bun::tests::install_probe_ready_when_node_modules_populated ... ok
+test cargo::tests::check_inputs_match_build_inputs ... ok
+test bun::tests::install_scope_falls_back_to_unit_dir_when_standalone ... ok
+test cargo::tests::default_tasks_include_build_check_test_clippy ... ok
+test bun::tests::toolchain_falls_back_to_node_pin_when_bun_unpinned ... ok
+test cargo::tests::id_and_fingerprint ... ok
+test cargo::tests::lint_inputs_include_clippy_config ... ok
+test bun::tests::install_scope_returns_workspace_root_for_workspace_member ... ok
+test cargo::tests::diagnostic_hook_appends_message_format_for_build_check_test_lint ... ok
+test cloudflare_pages::tests::id_and_display_name ... ok
+test cargo::tests::toolchain_falls_back_to_legacy_single_line ... ok
+test cargo::tests::detect_rejects_non_rust ... ok
+test bun::tests::toolchain_prefers_bun_version_over_nvmrc ... ok
+test cargo::tests::toolchain_reads_rust_toolchain_toml_channel ... ok
+test cargo::tests::toolchain_returns_none_when_unpinned ... ok
+test cloudflare_worker::tests::detect_matches_wrangler_toml ... ok
+test cloudflare_worker::tests::detect_matches_wrangler_jsonc ... ok
+test cloudflare_worker::tests::emits_plain_deploy_without_env ... ok
+test cloudflare_pages::tests::detect_is_always_false ... ok
+test cloudflare_worker::tests::id_and_display_name ... ok
+test cloudflare_worker::tests::emits_env_flag_when_configured ... ok
+test cloudflare_pages::tests::emits_deploy_with_defaults ... ok
+test cloudflare_worker::tests::quotes_env_with_special_chars ... ok
+test deno::tests::default_tasks_use_deno_commands ... ok
+test cloudflare_pages::tests::dist_path_with_slashes_unquoted ... ok
+test deno::tests::id_and_fingerprint ... ok
+test deno::tests::strip_jsonc_comments_preserves_strings ... ok
+test cloudflare_pages::tests::quotes_project_with_special_chars ... ok
+test diagnostic::tests::diagnostic_hook_with_builtin_parser ... ok
+test diagnostic::tests::diagnostic_hook_with_plugin_parser ... ok
+test diagnostic::tests::parser_id_all_lists_every_v1_variant ... ok
+test cargo::tests::detect_finds_rust_project ... ok
+test deno::tests::toolchain_handles_jsonc_comments ... ok
+test cloudflare_pages::tests::respects_dist_and_branch_overrides ... ok
+test diagnostic::tests::parser_id_serialises_kebab_case ... ok
+test cloudflare_pages::tests::emits_nothing_when_project_missing ... ok
+test cloudflare_worker::tests::detect_false_for_unrelated_project ... ok
+test diagnostic_record::tests::full_diagnostic_serialises_all_fields ... ok
+test diagnostic_record::tests::minimal_diagnostic_serialises_omitting_nulls ... ok
+test diagnostic_record::tests::diagnostic_roundtrips_through_json ... ok
+test go::tests::default_task_inputs_include_go_sources_and_lockfiles ... ok
+test go::tests::default_tasks_include_build_check_test_lint ... ok
+test diagnostic_record::tests::schema_emits_required_fields ... ok
+test deno::tests::detect_returns_false_for_node_project ... ok
+test deno::tests::toolchain_reads_deno_field_in_deno_json ... ok
+test diagnostic_record::tests::severity_serialises_lowercase ... ok
+test go::tests::id_and_fingerprint ... ok
+test go::tests::detect_returns_false_without_go_mod ... ok
+test deno::tests::detect_accepts_deno_json_or_lockfile ... ok
+test go::tests::toolchain_handles_require_block_before_go_directive ... ok
+test go::tests::toolchain_ignores_commented_directive ... ok
+test go::tests::detect_returns_false_when_go_mod_is_a_dir ... ok
+test deno::tests::toolchain_reads_dot_deno_version ... ok
+test go::tests::diagnostic_hook_only_for_lint ... ok
+test go::tests::detect_finds_go_project ... ok
+test go::tests::toolchain_reads_major_minor ... ok
+test gradle::tests::default_tasks_use_gradlew_lifecycle ... ok
+test go::tests::toolchain_reads_major_minor_patch ... ok
+test go::tests::toolchain_returns_none_when_go_mod_missing ... ok
+test go::tests::toolchain_returns_none_when_go_directive_absent ... ok
+test gradle::tests::id_and_fingerprint ... ok
+test gradle::tests::detect_finds_groovy_build_gradle ... ok
+test gradle::tests::invocation_falls_back_to_system_gradle_without_wrapper ... ok
+test gradle::tests::detect_finds_settings_only_root ... ok
+test gradle::tests::invocation_prefers_wrapper_when_present ... ok
+test go::tests::toolchain_strips_inline_comment ... ok
+test gradle::tests::toolchain_extracts_source_compatibility_javaversion_const ... ok
+test gradle::tests::toolchain_extracts_source_compatibility_quoted ... ok
+test gradle::tests::detect_finds_kotlin_build_gradle ... ok
+test integration::tests::deploy_kinds_default_to_no_cache ... ok
+test gradle::tests::detect_rejects_pom_only_dir ... ok
+test integration::tests::kind_as_str_is_stable ... ok
+test gradle::tests::toolchain_falls_back_to_gradle_properties ... ok
+test gradle::tests::toolchain_returns_none_when_unpinned ... ok
+test gradle::tests::toolchain_falls_back_to_tool_versions ... ok
+test integration::tests::detect_all_is_additive ... ok
+test integration::tests::register_adds_custom_integration ... ok
+test gradle::tests::toolchain_falls_back_to_libs_versions_toml ... ok
+test gradle::tests::toolchain_libs_versions_accepts_integer ... ok
+test gradle::tests::toolchain_extracts_java_language_version_kts ... ok
+test linear::tests::fallback_issue_override_is_passed_through ... ok
+test gradle::tests::toolchain_skips_commented_pin_in_build_gradle ... ok
+test linear::tests::id_and_required_env ... ok
+test gradle::tests::toolchain_extracts_javaversion_const_dotted_form ... ok
+test linear::tests::api_key_env_override_flows_to_env_allowlist ... ok
+test maven::tests::default_tasks_use_mvn_lifecycle ... ok
+test linear::tests::detect_false_without_explicit_opt_in ... ok
+test maven::tests::extract_property_handles_missing_close_tag ... ok
+test maven::tests::detect_finds_pom_xml ... ok
+test maven::tests::detect_rejects_non_maven ... ok
+test linear::tests::defaults_produce_a_notify_task_with_deployed_state ... ok
+test integration::tests::empty_registry_has_no_detections ... ok
+test gradle::tests::toolchain_prefers_java_version_file ... ok
+test maven::tests::id_and_fingerprint ... ok
+test linear::tests::target_state_override_is_shell_quoted ... ok
+test maven::tests::toolchain_falls_back_to_target_when_no_release ... ok
+test maven::tests::toolchain_prefers_release_over_target_and_source ... ok
+test maven::tests::toolchain_returns_none_when_no_compiler_property ... ok
+test maven::tests::toolchain_falls_back_to_source_when_only_source ... ok
+test maven::tests::toolchain_handles_whitespace_around_value ... ok
+test node_common::tests::explicit_signals_beat_types_node_inference ... ok
+test node_common::tests::detected_npm_scripts_handles_colon_names ... ok
+test node_common::tests::falls_back_to_volta_node ... ok
+test node_common::tests::falls_back_to_types_node_major ... ok
+test node_common::tests::falls_back_to_tool_versions_node_alias ... ok
+test node_common::tests::detected_npm_scripts_returns_empty_when_no_scripts_block ... ok
+test node_common::tests::find_workspace_root_ignores_package_json_without_workspaces ... ok
+test node_common::tests::detected_npm_scripts_returns_none_when_package_json_missing ... ok
+test node_common::tests::node_eslint_hook_none_for_other_tasks ... ok
+test node_common::tests::node_eslint_hook_returns_replace_for_lint ... ok
+test node_common::tests::find_workspace_root_recognises_pnpm_workspace_yaml ... ok
+test node_common::tests::parse_types_node_major_handles_common_constraints ... ok
+test node_common::tests::detected_npm_scripts_returns_one_task_per_script ... ok
+test node_common::tests::detected_npm_scripts_returns_some_empty_for_empty_scripts ... ok
+test node_common::tests::find_workspace_root_walks_up_to_npm_workspaces_root ... ok
+test node_common::tests::nvmrc_beats_volta_and_engines ... ok
+test node_common::tests::nvmrc_strips_v_prefix ... ok
+test node_common::tests::falls_back_to_engines_node ... ok
+test node_common::tests::falls_back_to_tool_versions_nodejs ... ok
+test node_common::tests::tool_name_is_respected ... ok
+test node_common::tests::find_workspace_root_object_form_workspaces_field_works ... ok
+test node_common::tests::find_workspace_root_returns_none_when_no_marker ... ok
+test node_common::tests::types_node_in_dependencies_works_too ... ok
+test node_npm::tests::default_tasks_include_build_test_lint ... ok
+test node_common::tests::volta_beats_engines ... ok
+test node_common::tests::detected_npm_scripts_uses_run_prefix ... ok
+test node_common::tests::returns_none_with_no_pin ... ok
+test node_common::tests::tool_versions_beats_volta ... ok
+test node_npm::tests::build_task_declares_dist_outputs ... ok
+test node_common::tests::find_workspace_root_skips_self_dir ... ok
+test node_npm::tests::detect_returns_false_when_lockfile_is_a_dir ... ok
+test node_npm::tests::id_and_fingerprint ... ok
+test node_npm::tests::detect_finds_npm_project_with_lockfile ... ok
+test node_npm::tests::detect_returns_false_without_lockfile ... ok
+test node_npm::tests::lint_task_includes_eslint_config_in_inputs ... ok
+test node_npm::tests::detected_tasks_uses_npm_run_prefix ... ok
+test node_npm::tests::install_probe_missing_when_no_node_modules ... ok
+test node_npm::tests::install_scope_falls_back_to_unit_dir_when_standalone ... ok
+test node_npm::tests::install_probe_missing_when_node_modules_lacks_sentinel ... ok
+test node_npm::tests::install_probe_ready_when_sentinel_present ... ok
+test node_npm::tests::toolchain_errors_on_malformed_package_json ... ok
+test node_npm::tests::toolchain_falls_back_to_node_version_file ... ok
+test node_npm::tests::toolchain_falls_back_to_engines_node ... ok
+test node_npm::tests::toolchain_returns_none_for_empty_nvmrc ... ok
+test node_npm::tests::toolchain_strips_leading_v_in_nvmrc ... ok
+test node_npm::tests::toolchain_prefers_nvmrc ... ok
+test php::tests::default_tasks_use_composer_phpunit_phpstan ... ok
+test node_npm::tests::toolchain_returns_none_when_engines_has_no_node ... ok
+test node_npm::tests::toolchain_returns_none_with_no_files ... ok
+test php::tests::id_and_fingerprint ... ok
+test node_npm::tests::toolchain_returns_none_when_no_pin ... ok
+test node_npm::tests::install_scope_returns_workspace_root_for_workspace_member ... ok
+test php::tests::parse_require_php_returns_none_when_php_absent ... ok
+test php::tests::parse_require_php_extracts_constraint ... ok
+test php::tests::detect_rejects_non_php ... ok
+test php::tests::detected_tasks_returns_none_when_no_scripts_block ... ok
+test php::tests::detect_finds_composer_json ... ok
+test php::tests::detected_tasks_mirrors_composer_scripts ... ok
+test php::tests::install_probe_missing_without_vendor ... ok
+test php::tests::toolchain_returns_none_when_composer_unparseable ... ok
+test plugin_search::tests::parse_adapter_name_extracts_id ... ok
+test plugin_search::tests::parse_adapter_name_rejects_unrelated ... ok
+test pnpm::tests::build_inputs_include_lockfile ... ok
+test php::tests::install_probe_ready_with_autoload ... ok
+test pnpm::tests::default_tasks_use_pnpm_run ... ok
+test pnpm::tests::id_and_fingerprint ... ok
+test pnpm::tests::detect_finds_pnpm_project ... ok
+test php::tests::toolchain_returns_none_when_unpinned ... ok
+test php::tests::toolchain_prefers_dot_php_version ... ok
+test php::tests::detected_tasks_returns_none_when_composer_missing ... ok
+test pnpm::tests::install_probe_ready_with_modules_yaml ... ok
+test php::tests::toolchain_falls_back_to_require_php ... ok
+test python::tests::default_tasks_use_python_tools ... ok
+test pnpm::tests::install_probe_missing_without_modules_yaml ... ok
+test probe::tests::unknown_program_returns_none ... ok
+test python::tests::diagnostic_hook_only_for_lint_uses_ruff ... ok
+test python::tests::detect_rejects_non_python ... ok
+test python::tests::id_and_fingerprint ... ok
+test python::tests::detect_pyproject_toml ... ok
+test pnpm::tests::detect_ignores_npm_only_project ... ok
+test python::tests::detect_requirements_txt ... ok
+test python_uv::tests::default_tasks_use_uv_run ... ok
+test pnpm::tests::install_scope_falls_back_to_unit_dir_when_standalone ... ok
+test python_uv::tests::detect_rejects_non_python ... ok
+test python_uv::tests::diagnostic_hook_only_for_lint_uses_ruff ... ok
+test python::tests::toolchain_returns_none_when_unpinned ... ok
+test python_uv::tests::detect_rejects_pyproject_without_uv_lock ... ok
+test python_uv::tests::detect_requires_uv_lock ... ok
+test pnpm::tests::toolchain_reads_nvmrc ... ok
+test python_uv::tests::id_and_fingerprint ... ok
+test pnpm::tests::install_scope_returns_workspace_root_via_pnpm_workspace_yaml ... ok
+test python_uv::tests::install_probe_missing_when_no_venv ... ok
+test probe::tests::memoised_returns_same_value_on_second_call ... ok
+test pnpm::tests::detected_tasks_uses_pnpm_run_prefix ... ok
+test python_uv::tests::toolchain_prefers_dot_python_version ... ok
+test railway::tests::id_and_required_env ... ok
+test python_uv::tests::install_probe_ready_when_venv_present ... ok
+test railway::tests::detect_false_for_unrelated_project ... ok
+test railway::tests::detect_matches_dot_railway_dir ... ok
+test railway::tests::detect_matches_railway_json ... ok
+test python_uv::tests::toolchain_reads_requires_python ... ok
+test railway::tests::emits_deploy_task_without_service_when_config_empty ... ok
+test railway::tests::detect_matches_railway_toml ... ok
+test railway::tests::shell_quote_escapes_embedded_quotes ... ok
+test railway::tests::shell_quote_preserves_plain_strings ... ok
+test railway::tests::root_config_prepends_cd_to_railway_up ... ok
+test railway::tests::shell_quote_wraps_names_with_spaces ... ok
+test railway::tests::services_takes_precedence_over_singular_service ... ok
+test railway::tests::slugify_lowercases_and_dasherises ... ok
+test registry::tests::builtin_contains_all_expected_adapters ... ok
+test railway::tests::single_service_via_services_array_keeps_unsuffixed_task_name ... ok
+test registry::tests::by_id_returns_none_for_unknown ... ok
+test python::tests::toolchain_prefers_dot_python_version ... ok
+test railway::tests::root_config_quotes_paths_with_spaces ... ok
+test python::tests::toolchain_reads_requires_python ... ok
+test registry::tests::register_adds_custom_adapter ... ok
+test registry::tests::detect_finds_go_in_go_project ... ok
+test railway::tests::emits_service_flag_when_config_names_one ... ok
+test ruby::tests::default_tasks_use_bundler_and_rubocop ... ok
+test registry::tests::detect_returns_none_for_unknown_project ... ok
+test registry::tests::detect_finds_node_npm_in_npm_project ... ok
+test ruby::tests::id_and_fingerprint ... ok
+test registry::tests::python_pip_handles_pyproject_without_uv_lock ... ok
+test ruby::tests::parse_gemfile_double_quoted ... ok
+test ruby::tests::parse_gemfile_ignores_commented_directive ... ok
+test ruby::tests::parse_gemfile_ignores_inline_comment ... ok
+test railway::tests::quotes_service_names_with_spaces ... ok
+test ruby::tests::parse_gemfile_single_quoted ... ok
+test ruby::tests::detect_finds_gemfile ... ok
+test ruby::tests::parse_gemfile_with_engine_suffix ... ok
+test registry::tests::yarn_wins_over_npm_when_both_lockfiles_present ... ok
+test ruby::tests::parse_gemfile_skips_unrelated_lines ... ok
+test railway::tests::services_array_fans_out_to_one_task_per_service ... ok
+test ruby::tests::toolchain_falls_back_to_tool_versions ... ok
+test registry::tests::pnpm_wins_over_npm_when_both_lockfiles_present ... ok
+test ruby::tests::toolchain_returns_none_when_unpinned ... ok
+test ruby::tests::toolchain_prefers_dot_ruby_version ... ok
+test registry::tests::python_uv_wins_over_python_when_uv_lock_present ... ok
+test ruby::tests::detect_rejects_non_ruby ... ok
+test ruby::tests::toolchain_falls_back_to_gemfile_ruby_directive ... ok
+test slack::tests::id_and_required_env ... ok
+test slack::tests::channel_and_username_overrides_are_shell_quoted ... ok
+test slack::tests::shell_quote_escapes_embedded_single_quotes ... ok
+test slack::tests::detect_is_false_without_explicit_opt_in ... ok
+test tool_versions::tests::first_matching_alias_wins ... ok
+test tool_versions::tests::ignores_extra_tokens_after_version ... ok
+test slack::tests::emits_one_notify_task_with_default_webhook_env ... ok
+test tool_versions::tests::parses_tool_with_single_alias ... ok
+test slack::tests::webhook_url_env_override_flows_to_run_command_and_env_allowlist ... ok
+test tool_versions::tests::returns_none_when_no_version_after_tool ... ok
+test tool_versions::tests::returns_none_when_tool_absent ... ok
+test tool_versions::tests::read_returns_none_when_file_absent ... ok
+test tool_versions::tests::read_finds_tool_in_file ... ok
+test tool_versions::tests::skips_comments_and_blanks ... ok
+test vercel::tests::id_and_required_env ... ok
+test yarn::tests::default_tasks_use_yarn ... ok
+test vercel::tests::detect_false_for_unrelated_project ... ok
+test vercel::tests::emits_deploy_and_preview_tasks ... ok
+test vercel::tests::detect_matches_dot_vercel_project_json ... ok
+test vercel::tests::detect_matches_vercel_json ... ok
+test yarn::tests::id_and_fingerprint ... ok
+test yarn::tests::detect_finds_yarn_project ... ok
+test yarn::tests::detect_ignores_non_yarn_project ... ok
+test yarn::tests::install_probe_ready_with_pnp_cjs ... ok
+test yarn::tests::install_probe_missing_without_any_marker ... ok
+test yarn::tests::install_probe_ready_with_yarn_integrity ... ok
+test yarn::tests::install_scope_falls_back_to_unit_dir_when_standalone ... ok
+test yarn::tests::detected_tasks_uses_yarn_prefix ... ok
+test yarn::tests::install_scope_returns_workspace_root_for_workspace_member ... ok
+test yarn::tests::toolchain_reads_nvmrc ... ok
+test plugin_search::tests::search_with_empty_path_returns_nothing ... ok
+
+test result: ok. 278 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+
+running 10 tests
+test allowlist_includes_only_listed_ids ... ok
+test binary_suffix_must_match_announced_id ... ok
+test disable_filter_skips_named_plugin ... ok
+test discovers_noop_plugin_on_search_path ... ok
+test duplicate_id_first_path_wins ... ok
+test noop_plugin_declares_diagnostic_hook_with_plugin_parser ... ok
+test registry_builtin_wins_on_id_collision ... ok
+test parse_diagnostics_round_trips_through_plugin ... ok
+test registry_with_plugins_routes_detect_to_subprocess ... ok
+test subprocess_adapter_install_succeeds_and_default_tasks_present ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+
+running 47 tests
+test key::tests::different_contents_different_keys ... ok
+test key::tests::from_hex_round_trips ... ok
+test key::tests::hex_is_64_chars ... ok
+test key::tests::add_file_from_disk_matches_in_memory ... ok
+test key::tests::different_extras_different_keys ... ok
+test key::tests::different_paths_different_keys ... ok
+test key::tests::length_prefix_prevents_smuggling ... ok
+test key::tests::same_inputs_same_key ... ok
+test key::tests::short_is_12_chars ... ok
+test local::tests::read_manifest_is_none_when_absent ... ok
+test local::tests::stats_ignores_tmp_files ... ok
+test local::tests::empty_output_globs_is_valid ... ok
+test local::tests::find_by_prefix_is_empty_for_no_matches ... ok
+test local::tests::put_captures_stderr_and_nonzero_exit ... ok
+test remote::tests::object_path_with_no_prefix ... ok
+test remote::tests::has_returns_false_for_missing_key ... ok
+test remote::tests::get_returns_false_for_missing_key ... ok
+test local::tests::stats_reflects_puts_and_clear ... ok
+test remote::tests::parse_s3_url_bucket_only ... ok
+test remote::tests::parse_s3_url_bucket_with_prefix ... ok
+test remote::tests::object_path_with_prefix ... ok
+test local::tests::workspace_outputs_without_workspace_root_is_an_error ... ok
+test remote::tests::parse_s3_url_rejects_empty_bucket ... ok
+test remote::tests::parse_s3_url_rejects_non_s3_scheme ... ok
+test remote::tests::parse_s3_url_trailing_slash_stripped ... ok
+test local::tests::miss_returns_none_without_side_effects ... ok
+test local::tests::put_manifest_then_read_roundtrips ... ok
+test remote_api::tests::build_rejects_unknown_scheme ... ok
+test remote_api::tests::build_monad_requires_token ... ok
+test remote_api::tests::detect_schemes ... ok
+test remote_bearer::tests::detects_cloudflare_edge_413_page ... ok
+test local::tests::find_by_prefix_matches_bundle_stems ... ok
+test remote_bearer::tests::does_not_misidentify_worker_413_as_edge ... ok
+test remote_bearer::tests::parse_monad_url_host_only ... ok
+test local::tests::put_overwrites_existing_entry ... ok
+test local::tests::get_errors_on_bundle_version_mismatch ... ok
+test remote::tests::round_trip_via_in_memory_store ... ok
+test local::tests::put_then_get_restores_outputs_and_result ... ok
+test remote_bearer::tests::parse_monad_url_rejects_empty_host ... ok
+test remote_bearer::tests::parse_monad_url_rejects_wrong_scheme ... ok
+test remote_bearer::tests::parse_monad_url_trailing_slash_stripped ... ok
+test remote_bearer::tests::parse_monad_url_with_prefix ... ok
+test remote_bearer::tests::should_retry_status_classifies ... ok
+test local::tests::workspace_outputs_roundtrip_to_workspace_root ... ok
+test remote_bearer::tests::cache_url_format ... ok
+test remote_bearer::tests::display_url_is_original ... ok
+test remote_bearer::tests::cache_url_with_prefix ... ok
+
+test result: ok. 47 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+
+running 9 tests
+test head_returns_false_on_401 ... ok
+test get_returns_false_on_404 ... ok
+test put_succeeds_on_2xx ... ok
+test get_writes_body_on_200 ... ok
+test head_returns_false_on_404 ... ok
+test put_surfaces_over_quota_413 ... ok
+test url_with_prefix_routes_correctly ... ok
+test head_returns_true_on_200 ... ok
+test get_retries_once_on_5xx ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+
+running 17 tests
+test tests::build_report_omits_empty_optional_fields ... ok
+test tests::build_report_roundtrip ... ok
+test tests::cache_error_status_codes ... ok
+test tests::build_status_serializes_snake_case ... ok
+test tests::cache_error_tagged_snake_case ... ok
+test tests::claims_roundtrip ... ok
+test tests::cache_error_exports_json_schema ... ok
+test tests::error_response_omits_empty_message ... ok
+test tests::token_label_accepts_valid ... ok
+test tests::token_label_deserialize_validates ... ok
+test tests::token_label_rejects_invalid_chars ... ok
+test tests::token_label_rejects_leading_or_trailing_dash ... ok
+test tests::token_label_rejects_too_long ... ok
+test tests::claims_exports_json_schema ... ok
+test tests::token_label_rejects_too_short ... ok
+test tests::token_scope_capabilities ... ok
+test tests::token_scope_serializes_snake_case ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 234 tests
+test cli::tests::parse_secret_alias_rejects_empty_halves ... ok
+test cli::tests::parse_secret_alias_accepts_valid_pair ... ok
+test cli::tests::parse_secret_alias_rejects_leading_digit ... ok
+test cli::tests::parse_secret_alias_rejects_literal_values ... ok
+test cli::tests::parse_secret_alias_rejects_missing_equals ... ok
+test cli::tests::parses_add_with_version_pin ... ok
+test cli::tests::parses_add_single_package_no_unit ... ok
+test cli::tests::parses_check_without_target ... ok
+test cli::tests::parses_cache_stats ... ok
+test cli::tests::parses_box_add ... ok
+test cli::tests::parses_add_requires_at_least_one_package ... ok
+test cli::tests::parses_add_multiple_packages_with_unit_and_dev ... ok
+test cli::tests::parses_check_with_target ... ok
+test cli::tests::parses_box_list ... ok
+test cli::tests::parses_ci_with_json ... ok
+test cli::tests::parses_graph_with_dot_format ... ok
+test cli::tests::parses_deploy_with_env_and_secret_from ... ok
+test cli::tests::parses_global_since_override ... ok
+test cli::tests::parses_build_with_target_and_no_cache ... ok
+test cli::tests::parses_plan ... ok
+test cli::tests::parses_run_with_trailing_args_after_dash_dash ... ok
+test cli::tests::parses_run_with_unit_and_task ... ok
+test errors::tests::classify_config_parse_error ... ok
+test cli::tests::parses_run_requires_unit_and_task ... ok
+test cli::tests::parses_unit_add ... ok
+test cli::tests::parses_unit_add_with_lang_and_profile ... ok
+test errors::tests::classify_target_ambiguous_emits_target_ambiguous ... ok
+test errors::tests::classify_scaffold_unsupported_language ... ok
+test cli::tests::cli_definition_is_valid ... ok
+test errors::tests::classify_target_not_found_empty_workspace_suggests_init ... ok
+test errors::tests::classify_unknown_falls_back_to_internal ... ok
+test errors::tests::classify_walks_through_anyhow_context ... ok
+test errors::tests::empty_next_steps_serializes_as_empty_array ... ok
+test errors::tests::classify_target_not_found_emits_target_not_found_with_next_steps ... ok
+test errors::tests::error_omits_optional_fields_when_absent ... ok
+test errors::tests::error_serializes_where_as_where_key ... ok
+test errors::tests::every_config_error_has_next_steps ... ok
+test errors::tests::every_scaffold_error_has_next_steps ... ok
+test errors::tests::internal_error_has_empty_next_steps ... ok
+test errors::tests::next_steps_serialize_as_array_when_present ... ok
+test cli::tests::parses_toolchain_pin ... ok
+test cli::tests::parses_serve_requires_monad_name ... ok
+test errors::tests::target_ambiguous_has_next_steps ... ok
+test errors::tests::workspace_not_found_has_next_steps ... ok
+test cli::tests::parses_unit_list ... ok
+test cli::tests::parses_verbose_short_flag ... ok
+test init::tests::detect_captures_toolchain_pin ... ok
+test init::tests::detect_skips_root_itself ... ok
+test init::tests::merge_agent_file_creates_when_missing ... ok
+test init::tests::detect_skips_node_modules_and_vendor ... ok
+test init::tests::merge_toolchains_dedupes_agreeing_pins ... ok
+test init::tests::merge_toolchains_reports_conflicts_keeps_first ... ok
+test init::tests::detect_does_not_recurse_into_matched_dir ... ok
+test init::tests::merge_agent_file_is_unchanged_on_repeat ... ok
+test init::tests::detect_finds_go_and_node_in_apps_dirs ... ok
+test init::tests::render_claude_snippet_imports_agents_md ... ok
+test init::tests::render_agents_snippet_carries_canonical_directive ... ok
+test init::tests::render_monad_toml_omits_toolchain_when_empty ... ok
+test init::tests::render_monad_toml_includes_toolchain_when_present ... ok
+test init::tests::render_prod_toml_falls_back_to_placeholder_when_empty ... ok
+test init::tests::render_prod_toml_lists_units ... ok
+test init::tests::render_unit_toml_emits_blocks_for_detected_tasks ... ok
+test init::tests::render_unit_toml_escapes_quotes_in_run_command ... ok
+test init::tests::render_unit_toml_minimal ... ok
+test init::tests::render_unit_toml_quotes_keys_with_colons ... ok
+test init::tests::render_unit_toml_with_empty_tasks_falls_back_to_defaults_hint ... ok
+test cli::tests::parses_why_requires_hash ... ok
+test linear_notify::tests::discovers_multiple_issues_across_output_and_task_name ... ok
+test linear_notify::tests::dedupes_repeated_issue_references ... ok
+test linear_notify::tests::discovers_single_issue_ref_from_output ... ok
+test linear_notify::tests::punctuation_around_id_is_stripped ... ok
+test linear_notify::tests::skips_false_positives_like_single_letter_prefix ... ok
+test linear_notify::tests::skips_lowercase_prefixes ... ok
+test mcp::tests::claude_code_local_scope_uses_dot_mcp_json ... ok
+test mcp::tests::claude_code_user_scope_resolves_to_dotfile ... ok
+test init::tests::write_unit_tomls_emits_detected_tasks_for_node ... ok
+test mcp::tests::codex_rejects_invalid_toml ... ok
+test mcp::tests::install_one_is_idempotent ... ok
+test mcp::tests::install_one_creates_config_when_missing ... ok
+test mcp::tests::install_one_rejects_non_object_root ... ok
+test mcp::tests::new_client_paths_resolve ... ok
+test mcp::tests::client_installed_requires_real_marker ... ok
+test mcp::tests::windsurf_rejects_local_scope ... ok
+test migrate::lerna::tests::dry_run_writes_nothing ... ok
+test mcp::tests::zed_writes_under_context_servers_key ... ok
+test mcp::tests::install_one_adds_to_existing_config_without_clobbering ... ok
+test init::tests::merge_agent_file_replaces_existing_block_in_place ... ok
+test migrate::lerna::tests::infer_short_name_strips_scope ... ok
+test init::tests::merge_agent_file_orphan_begin_marker_falls_back_to_append ... ok
+test mcp::tests::install_one_updates_when_workspace_changes ... ok
+test mcp::tests::codex_updates_when_workspace_changes ... ok
+test mcp::tests::codex_writes_toml_table ... ok
+test mcp::tests::opencode_writes_typed_mcp_entry ... ok
+test init::tests::merge_agent_file_appends_when_no_markers ... ok
+test init::tests::install_handles_claude_symlink_to_agents ... ok
+test migrate::make::tests::dry_run_writes_nothing ... ok
+test migrate::make::tests::is_variable_assignment_recognises_all_operators ... ok
+test migrate::make::tests::flags_automatic_variables ... ok
+test migrate::make::tests::comments_and_blank_lines_are_ignored ... ok
+test migrate::lerna::tests::picks_correct_adapter_for_npm_client_pnpm ... ok
+test migrate::lerna::tests::refuses_to_overwrite_without_force ... ok
+test migrate::make::tests::missing_makefile_errors ... ok
+test migrate::lerna::tests::falls_back_to_workspaces_when_use_workspaces_true ... ok
+test migrate::lerna::tests::yarn_classic_workspaces_object_form_via_use_workspaces ... ok
+test migrate::make::tests::skips_pattern_rules_with_note ... ok
+test migrate::lerna::tests::surfaces_command_config_as_skipped_note ... ok
+test migrate::lerna::tests::migrates_workspace_with_two_packages ... ok
+test migrate::make::tests::split_target_line_handles_double_colon ... ok
+test migrate::make::tests::detects_make_variable_expansion_note ... ok
+test migrate::make::tests::parses_multiline_recipe ... ok
+test migrate::make::tests::migrates_simple_makefile_with_three_targets ... ok
+test migrate::make::tests::split_target_line_rejects_assignment ... ok
+test migrate::make::tests::refuses_to_overwrite_without_force ... ok
+test migrate::make::tests::surfaces_phony_targets_in_notes ... ok
+test migrate::make::tests::skips_variable_assignments ... ok
+test migrate::moon::tests::parser_handles_array_and_map_mix ... ok
+test migrate::moon::tests::parser_handles_command_as_array ... ok
+test migrate::make::tests::target_with_prereqs_emits_inferred_note ... ok
+test migrate::moon::tests::parser_handles_flow_array ... ok
+test migrate::moon::tests::parser_strips_comments ... ok
+test migrate::moon::tests::dry_run_writes_nothing ... ok
+test migrate::moon::tests::maps_language_typescript_to_node_npm ... ok
+test migrate::moon::tests::maps_language_rust_to_cargo ... ok
+test migrate::moon::tests::migrates_workspace_with_two_projects ... ok
+test migrate::nx::tests::cross_project_input_marker_is_dropped_with_note ... ok
+test migrate::nx::tests::infer_short_name_strips_scope ... ok
+test migrate::nx::tests::named_inputs_expand_to_globs ... ok
+test migrate::nx::tests::options_substitution_keeps_project_relative_outputs ... ok
+test migrate::moon::tests::surfaces_cross_project_deps_as_notes ... ok
+test migrate::nx::tests::options_substitution_resolves_output_path ... ok
+test migrate::moon::tests::surfaces_toolchain_blocks_as_notes ... ok
+test migrate::moon::tests::refuses_to_overwrite_without_force ... ok
+test migrate::nx::tests::substitute_options_at_path_start_rooted_value_is_left_alone ... ok
+test migrate::nx::tests::substitute_options_handles_repeated_keys ... ok
+test migrate::nx::tests::substitute_options_leaves_unknown_keys_intact ... ok
+test migrate::nx::tests::target_defaults_inputs_inherit_when_target_has_none ... ok
+test migrate::nx::tests::nrwl_legacy_scope_maps_like_nx ... ok
+test migrate::nx::tests::missing_nx_json_is_tolerated ... ok
+test migrate::nx::tests::dry_run_writes_nothing ... ok
+test migrate::nx::tests::surfaces_dependson_cache_false_and_configurations_as_notes ... ok
+test migrate::moon::tests::parses_object_form_projects_field ... ok
+test migrate::nx::tests::unknown_executor_falls_back_to_nx_run_shim ... ok
+test migrate::nx::tests::refuses_to_overwrite_without_force ... ok
+test migrate::rush::tests::dry_run_writes_nothing ... ok
+test migrate::nx::tests::run_commands_with_array_form_joins_with_amp_amp ... ok
+test migrate::rush::tests::strip_line_comments_preserves_strings ... ok
+test migrate::nx::tests::migrates_workspace_with_two_projects ... ok
+test migrate::rush::tests::strips_scope_from_package_name ... ok
+test migrate::rush::tests::jsonc_line_comments_are_tolerated ... ok
+test migrate::turbo::tests::infer_short_name_strips_scope ... ok
+test migrate::rush::tests::picks_yarn_adapter_when_yarn_version_set ... ok
+test migrate::nx::tests::workspace_layout_caps_discovery ... ok
+test migrate::rush::tests::migrates_workspace_with_two_projects ... ok
+test migrate::rush::tests::picks_pnpm_adapter_when_pnpm_version_set ... ok
+test migrate::rush::tests::refuses_to_overwrite_without_force ... ok
+test migrate::nx::tests::skips_node_modules_when_walking ... ok
+test migrate::rush::tests::defaults_to_node_npm_when_no_pm_set ... ok
+test migrate::turbo::tests::dry_run_writes_nothing ... ok
+test migrate::rush::tests::surfaces_phases_as_not_yet_implemented ... ok
+test migrate::rush::tests::surfaces_command_line_json_bulk_commands_as_notes ... ok
+test release::tests::parse_bump_accepts_literal_version ... ok
+test migrate::turbo::tests::supports_v1_pipeline_key ... ok
+test release::tests::parse_bump_handles_keywords ... ok
+test release::tests::parse_bump_rejects_garbage ... ok
+test release::tests::list_workspace_members_pulls_relative_paths ... ok
+test migrate::turbo::tests::migrates_workspace_with_two_packages ... ok
+test migrate::turbo::tests::refuses_to_overwrite_without_force ... ok
+test migrate::turbo::tests::surfaces_dependson_and_cache_false_as_notes ... ok
+test release::tests::rewrite_member_path_pins_no_op_on_pure_leaf ... ok
+test release::tests::read_workspace_version_finds_the_pin ... ok
+test migrate::turbo::tests::yarn_classic_workspaces_object_form ... ok
+test release::tests::rewrite_preserves_comments_and_ordering ... ok
+test release::tests::rewrite_no_op_when_no_internal_pins ... ok
+test run_print::tests::escape_gha_replaces_special_chars ... ok
+test release::tests::rewrite_member_path_pins_bumps_sibling_deps ... ok
+test run_print::tests::format_gha_detail_trims_stderr_and_falls_back_to_exit ... ok
+test scaffold::tests::capitalised_handles_kebab_and_snake ... ok
+test release::tests::rewrite_updates_workspace_package_and_internal_pins ... ok
+test scaffold::tests::errors_when_no_profiles_defined ... ok
+test scaffold::tests::dot_path_adopts_as_workspace_root_basename ... FAILED
+test scaffold::tests::deno_scaffold_uses_deno_json ... FAILED
+test scaffold::tests::java_package_segment_falls_back_to_app_when_empty ... ok
+test scaffold::tests::cargo_scaffold_creates_cargo_project ... FAILED
+test scaffold::tests::bun_scaffold_uses_bun_runtime ... FAILED
+test scaffold::tests::errors_for_unknown_monad_name ... FAILED
+test scaffold::tests::gradle_scaffold_creates_expected_files ... FAILED
+test scaffold::tests::errors_when_language_unknown ... FAILED
+test scaffold::tests::go_scaffold_creates_expected_files ... FAILED
+test scaffold::tests::adoption_refuses_when_unit_toml_already_exists ... FAILED
+test scaffold::tests::java_package_segment_prefixes_leading_digit ... ok
+test scaffold::tests::errors_when_unit_name_collides ... FAILED
+test scaffold::tests::parse_go_version_output_extracts_patch_version ... ok
+test scaffold::tests::java_package_segment_strips_dashes_and_lowercases ... ok
+test scaffold::tests::parse_go_version_output_none_on_empty ... ok
+test scaffold::tests::parse_go_version_output_trims_dev_suffix ... ok
+test scaffold::tests::parse_java_version_handles_modern_and_legacy ... ok
+test scaffold::tests::parse_node_version_output_strips_v ... ok
+test scaffold::tests::parse_php_version_extracts_dotted_version ... ok
+test scaffold::tests::parse_python_version_handles_python3 ... ok
+test scaffold::tests::parse_ruby_version_extracts_dotted_version ... ok
+test scaffold::tests::parse_rust_version_strips_channel_suffix ... ok
+test scaffold::tests::node_npm_scaffold_creates_expected_files ... FAILED
+test scaffold::tests::non_empty_dir_with_go_manifest_is_adopted ... FAILED
+test scaffold::tests::maven_scaffold_creates_expected_files ... FAILED
+test scaffold::tests::non_empty_dir_without_adapter_errors_with_language_unknown ... FAILED
+test schema::tests::diagnostics_schema_has_required_fields ... ok
+test scaffold::tests::requires_monad_when_multiple_defined ... FAILED
+test scaffold::tests::wires_unit_into_monad_and_preserves_comment ... FAILED
+test scaffold::tests::php_scaffold_creates_expected_files ... FAILED
+test scaffold::tests::yarn_scaffold_uses_yarn_commands ... FAILED
+test scaffold::tests::pnpm_scaffold_uses_pnpm_commands ... FAILED
+test scaffold::tests::ruby_scaffold_creates_expected_files ... FAILED
+test schema::tests::listings_cover_every_schema_target ... ok
+test slack_post::tests::built_outcome_renders_rocket ... ok
+test slack_post::tests::channel_and_username_are_passed_through ... ok
+test scaffold::tests::python_scaffold_creates_package_layout ... FAILED
+test schema::tests::error_schema_uses_where_not_locator ... ok
+test slack_post::tests::failed_outcome_renders_alert_and_stderr ... ok
+test slack_post::tests::stderr_is_tail_capped_to_avoid_slack_overflow ... ok
+test slack_post::tests::extract_url_returns_none_when_no_url ... ok
+test slack_post::tests::missing_environment_falls_back_to_placeholder ... ok
+test toolchain::tests::co_required_empty_for_empty_plan ... ok
+test toolchain::tests::co_required_empty_when_no_primary_declares_one ... ok
+test slack_post::tests::extract_url_grabs_last_url_and_trims_trailing_punctuation ... ok
+test schema::tests::plan_schema_has_top_level_profiles_and_summary ... ok
+test toolchain::tests::co_required_honours_repo_pin_override ... ok
+test schema::tests::report_schema_includes_diagnostics_field_on_executed_task ... ok
+test toolchain::tests::co_required_uses_default_when_unpinned ... ok
+test toolchain::tests::prepend_path_lands_at_front ... ok
+test workspace_root_tests::explicit_workspace_flag_takes_precedence ... ok
+test workspace_root_tests::falls_back_to_cwd_when_no_flag ... ok
+test workspace_root_tests::explicit_workspace_in_subdir_walks_up_to_root ... ok
+test schema::tests::all_targets_produce_parsable_schemas ... ok
+test cli::tests::every_monad_verb_in_in_tree_docs_resolves_to_a_real_subcommand ... FAILED
+
+failures:
+
+---- scaffold::tests::dot_path_adopts_as_workspace_root_basename stdout ----
+
+thread 'scaffold::tests::dot_path_adopts_as_workspace_root_basename' (2643288) panicked at crates/monad-cli/src/scaffold.rs:1834:41:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpHbZGl4/myapp/profiles/prod.toml", message: "TOML parse error at line 2, column 1\n  |\n2 | units = []\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- scaffold::tests::deno_scaffold_uses_deno_json stdout ----
+
+thread 'scaffold::tests::deno_scaffold_uses_deno_json' (2643287) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpLRZ8az/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::cargo_scaffold_creates_cargo_project stdout ----
+
+thread 'scaffold::tests::cargo_scaffold_creates_cargo_project' (2643286) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpmOlyAv/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::bun_scaffold_uses_bun_runtime stdout ----
+
+thread 'scaffold::tests::bun_scaffold_uses_bun_runtime' (2643284) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpD9aBOQ/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::errors_for_unknown_monad_name stdout ----
+
+thread 'scaffold::tests::errors_for_unknown_monad_name' (2643289) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpLPYHn8/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::gradle_scaffold_creates_expected_files stdout ----
+
+thread 'scaffold::tests::gradle_scaffold_creates_expected_files' (2643294) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpTyO751/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::errors_when_language_unknown stdout ----
+
+thread 'scaffold::tests::errors_when_language_unknown' (2643290) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpWsFyty/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::go_scaffold_creates_expected_files stdout ----
+
+thread 'scaffold::tests::go_scaffold_creates_expected_files' (2643293) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpJjAylH/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::adoption_refuses_when_unit_toml_already_exists stdout ----
+
+thread 'scaffold::tests::adoption_refuses_when_unit_toml_already_exists' (2643283) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpmcerwN/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::errors_when_unit_name_collides stdout ----
+
+thread 'scaffold::tests::errors_when_unit_name_collides' (2643292) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpFm47DH/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::node_npm_scaffold_creates_expected_files stdout ----
+
+thread 'scaffold::tests::node_npm_scaffold_creates_expected_files' (2643299) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmp0TvJCW/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::non_empty_dir_with_go_manifest_is_adopted stdout ----
+
+thread 'scaffold::tests::non_empty_dir_with_go_manifest_is_adopted' (2643300) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmp3m3CuK/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::maven_scaffold_creates_expected_files stdout ----
+
+thread 'scaffold::tests::maven_scaffold_creates_expected_files' (2643298) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmp5XPhKu/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::non_empty_dir_without_adapter_errors_with_language_unknown stdout ----
+
+thread 'scaffold::tests::non_empty_dir_without_adapter_errors_with_language_unknown' (2643301) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpqdZGrH/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::requires_monad_when_multiple_defined stdout ----
+
+thread 'scaffold::tests::requires_monad_when_multiple_defined' (2643314) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpvp3AIZ/profiles/staging.toml", message: "TOML parse error at line 2, column 1\n  |\n2 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::wires_unit_into_monad_and_preserves_comment stdout ----
+
+thread 'scaffold::tests::wires_unit_into_monad_and_preserves_comment' (2643316) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpOvoWue/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::php_scaffold_creates_expected_files stdout ----
+
+thread 'scaffold::tests::php_scaffold_creates_expected_files' (2643311) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpl8iCLz/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::yarn_scaffold_uses_yarn_commands stdout ----
+
+thread 'scaffold::tests::yarn_scaffold_uses_yarn_commands' (2643317) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpXyjN6o/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::pnpm_scaffold_uses_pnpm_commands stdout ----
+
+thread 'scaffold::tests::pnpm_scaffold_uses_pnpm_commands' (2643312) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpULDOMj/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::ruby_scaffold_creates_expected_files stdout ----
+
+thread 'scaffold::tests::ruby_scaffold_creates_expected_files' (2643315) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpqda1G6/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- scaffold::tests::python_scaffold_creates_package_layout stdout ----
+
+thread 'scaffold::tests::python_scaffold_creates_package_layout' (2643313) panicked at crates/monad-cli/src/scaffold.rs:1267:31:
+called `Result::unwrap()` on an `Err` value: Parse { kind: "profiles/*.toml", path: "/tmp/.tmpOhN8ie/profiles/prod.toml", message: "TOML parse error at line 3, column 1\n  |\n3 | units = [\"apps/seed\"]\n  | ^^^^^^\nunknown field `units`, expected `name` or `units`\n" }
+
+---- cli::tests::every_monad_verb_in_in_tree_docs_resolves_to_a_real_subcommand stdout ----
+
+thread 'cli::tests::every_monad_verb_in_in_tree_docs_resolves_to_a_real_subcommand' (2643106) panicked at crates/monad-cli/src/cli.rs:864:73:
+read ../../docs/agents.md: No such file or directory (os error 2)
+
+
+failures:
+    cli::tests::every_monad_verb_in_in_tree_docs_resolves_to_a_real_subcommand
+    scaffold::tests::adoption_refuses_when_unit_toml_already_exists
+    scaffold::tests::bun_scaffold_uses_bun_runtime
+    scaffold::tests::cargo_scaffold_creates_cargo_project
+    scaffold::tests::deno_scaffold_uses_deno_json
+    scaffold::tests::dot_path_adopts_as_workspace_root_basename
+    scaffold::tests::errors_for_unknown_monad_name
+    scaffold::tests::errors_when_language_unknown
+    scaffold::tests::errors_when_unit_name_collides
+    scaffold::tests::go_scaffold_creates_expected_files
+    scaffold::tests::gradle_scaffold_creates_expected_files
+    scaffold::tests::maven_scaffold_creates_expected_files
+    scaffold::tests::node_npm_scaffold_creates_expected_files
+    scaffold::tests::non_empty_dir_with_go_manifest_is_adopted
+    scaffold::tests::non_empty_dir_without_adapter_errors_with_language_unknown
+    scaffold::tests::php_scaffold_creates_expected_files
+    scaffold::tests::pnpm_scaffold_uses_pnpm_commands
+    scaffold::tests::python_scaffold_creates_package_layout
+    scaffold::tests::requires_monad_when_multiple_defined
+    scaffold::tests::ruby_scaffold_creates_expected_files
+    scaffold::tests::wires_unit_into_monad_and_preserves_comment
+    scaffold::tests::yarn_scaffold_uses_yarn_commands
+
+test result: FAILED. 212 passed; 22 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+

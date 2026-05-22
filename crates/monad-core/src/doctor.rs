@@ -133,7 +133,7 @@ pub fn run_with_options(
                 format!(
                     "{} monad(s), {} unit(es) loaded from {}",
                     ws.profiles.len(),
-                    ws.unites_by_name.len(),
+                    ws.units_by_name.len(),
                     root.display()
                 ),
             ));
@@ -173,7 +173,7 @@ pub fn run_with_options(
 
     // 8. Orphan unit.toml files — units on disk that aren't in any
     //    monad's `units` list, so monad plan doesn't see them.
-    checks.push(check_orphan_unites(&workspace));
+    checks.push(check_orphan_units(&workspace));
 
     // 9. Cloud-specific (opt-in) — validate monad:// token + reach
     //    cache.monad.build + api.monad.build endpoints.
@@ -184,14 +184,14 @@ pub fn run_with_options(
     Ok(finalize(checks))
 }
 
-fn check_orphan_unites(workspace: &Workspace) -> DoctorCheck {
-    let orphans = crate::discovery::scan_orphan_unites(workspace);
+fn check_orphan_units(workspace: &Workspace) -> DoctorCheck {
+    let orphans = crate::discovery::scan_orphan_units(workspace);
     if orphans.is_empty() {
         return check_ok(
-            "workspace.orphan_unites",
+            "workspace.orphan_units",
             format!(
                 "{} wired unit(es); no orphan unit.toml files on disk",
-                workspace.unites_by_name.len()
+                workspace.units_by_name.len()
             ),
         );
     }
@@ -201,7 +201,7 @@ fn check_orphan_unites(workspace: &Workspace) -> DoctorCheck {
         .collect::<Vec<_>>()
         .join(", ");
     check_warn(
-        "workspace.orphan_unites",
+        "workspace.orphan_units",
         format!(
             "{} unit.toml file(s) on disk not wired into any monad: {list} — \
              run `monad unit add <path>` to wire them",
@@ -244,7 +244,7 @@ fn check_toolchains(workspace: &Workspace) -> Vec<DoctorCheck> {
     let mut checks = Vec::new();
     let mut seen: std::collections::BTreeSet<(String, String)> = Default::default();
 
-    for unit in workspace.unites_by_path.values() {
+    for unit in workspace.units_by_path.values() {
         let Some(adapter) = resolve_adapter(&registry, unit) else {
             continue;
         };
@@ -326,7 +326,7 @@ fn check_integrations(
 
     // Bucket: integration id → list of unit names that detected it.
     let mut detections: std::collections::BTreeMap<String, Vec<String>> = Default::default();
-    for unit in workspace.unites_by_path.values() {
+    for unit in workspace.units_by_path.values() {
         for integration in registry.detect_all(&unit.dir) {
             detections
                 .entry(integration.id().to_string())
@@ -353,7 +353,7 @@ fn check_integrations(
         let Some(integration) = registry.by_id(&id) else {
             continue;
         };
-        let unites_suffix = format!("(units: {})", unit_names.join(", "));
+        let units_suffix = format!("(units: {})", unit_names.join(", "));
 
         // Env check.
         let required_env = integration.required_env();
@@ -361,7 +361,7 @@ fn check_integrations(
         if required_env.is_empty() {
             checks.push(check_skipped(
                 &env_name,
-                format!("no env vars required {unites_suffix}"),
+                format!("no env vars required {units_suffix}"),
             ));
         } else {
             // Honour aliases so `doctor --env staging` checks the
@@ -389,14 +389,14 @@ fn check_integrations(
                 checks.push(check_ok(
                     &env_name,
                     format!(
-                        "all {} env var(s) present {unites_suffix}",
+                        "all {} env var(s) present {units_suffix}",
                         required_env.len()
                     ),
                 ));
             } else {
                 checks.push(check_fail(
                     &env_name,
-                    format!("missing env var(s): {} {unites_suffix}", missing.join(", ")),
+                    format!("missing env var(s): {} {units_suffix}", missing.join(", ")),
                 ));
             }
         }
@@ -407,7 +407,7 @@ fn check_integrations(
         if required_cli.is_empty() {
             checks.push(check_skipped(
                 &cli_name,
-                format!("no CLI required {unites_suffix}"),
+                format!("no CLI required {units_suffix}"),
             ));
         } else {
             let missing: Vec<&CliRequirement> = required_cli
@@ -419,7 +419,7 @@ fn check_integrations(
                 checks.push(check_ok(
                     &cli_name,
                     format!(
-                        "all CLI binaries on PATH: {} {unites_suffix}",
+                        "all CLI binaries on PATH: {} {units_suffix}",
                         names.join(", ")
                     ),
                 ));
@@ -430,7 +430,7 @@ fn check_integrations(
                     .collect();
                 checks.push(check_fail(
                     &cli_name,
-                    format!("not on PATH: {} {unites_suffix}", hint_lines.join("; ")),
+                    format!("not on PATH: {} {units_suffix}", hint_lines.join("; ")),
                 ));
             }
         }

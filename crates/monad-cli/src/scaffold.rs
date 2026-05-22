@@ -114,13 +114,13 @@ pub fn run(req: ScaffoldRequest, workspace: &Workspace) -> Result<ScaffoldResult
     let monad_source = workspace.profiles[&monad_name].source.clone();
 
     let unit_name = derive_unit_name(req.unit_rel, req.workspace_root)?;
-    if workspace.unites_by_name.contains_key(&unit_name) {
+    if workspace.units_by_name.contains_key(&unit_name) {
         return Err(ScaffoldError::UnitNameCollision { name: unit_name }.into());
     }
 
     let unit_rel_str = normalize_rel(req.unit_rel);
     if workspace
-        .unites_by_path
+        .units_by_path
         .keys()
         .any(|p| normalize_rel(p) == unit_rel_str)
     {
@@ -1260,7 +1260,7 @@ mod tests {
     }
 
     fn default_fixture() -> Fixture {
-        fixture_with_profile("name = \"prod\"\n# preserve me\nunites = [\"apps/seed\"]\n")
+        fixture_with_profile("name = \"prod\"\n# preserve me\nunits = [\"apps/seed\"]\n")
     }
 
     fn load(root: &Path) -> Workspace {
@@ -1719,7 +1719,7 @@ mod tests {
 
         // Re-loading the workspace with the new unit must succeed.
         let ws2 = Workspace::load(&fx.root).unwrap();
-        assert!(ws2.unites_by_name.contains_key("api"));
+        assert!(ws2.units_by_name.contains_key("api"));
     }
 
     #[test]
@@ -1825,7 +1825,7 @@ mod tests {
         std::fs::create_dir(root.join("profiles")).unwrap();
         std::fs::write(
             root.join("profiles/prod.toml"),
-            "name = \"prod\"\nunites = []\n",
+            "name = \"prod\"\nunits = []\n",
         )
         .unwrap();
         std::fs::write(root.join("go.mod"), "module example.com/myapp\ngo 1.22\n").unwrap();
@@ -1849,7 +1849,7 @@ mod tests {
 
         // Re-loading the workspace finds the unit at `.`.
         let ws2 = Workspace::load(&root).unwrap();
-        assert!(ws2.unites_by_name.contains_key("myapp"));
+        assert!(ws2.units_by_name.contains_key("myapp"));
     }
 
     #[test]
@@ -1871,10 +1871,10 @@ mod tests {
 
     #[test]
     fn requires_monad_when_multiple_defined() {
-        let fx = fixture_with_profile("name = \"prod\"\nunites = [\"apps/seed\"]\n");
+        let fx = fixture_with_profile("name = \"prod\"\nunits = [\"apps/seed\"]\n");
         std::fs::write(
             fx.root.join("profiles/staging.toml"),
-            "name = \"staging\"\nunites = [\"apps/seed\"]\n",
+            "name = \"staging\"\nunits = [\"apps/seed\"]\n",
         )
         .unwrap();
 

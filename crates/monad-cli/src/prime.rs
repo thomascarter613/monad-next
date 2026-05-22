@@ -37,10 +37,10 @@ pub fn print_human(out: &Output) {
         style::dim("·"),
         out.profiles.len(),
         out.units.len(),
-        if out.orphan_unites.is_empty() {
+        if out.orphan_units.is_empty() {
             String::new()
         } else {
-            format!(", {} orphan", out.orphan_unites.len())
+            format!(", {} orphan", out.orphan_units.len())
         },
         if out.cache.remote_url.is_some() {
             ", remote cache configured"

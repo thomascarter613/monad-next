@@ -1,7 +1,7 @@
 //! Workspace filesystem scanning — finds things that Workspace::load
 //! deliberately ignores.
 //!
-//! [`scan_orphan_unites`] walks the workspace tree for `unit.toml` files
+//! [`scan_orphan_units`] walks the workspace tree for `unit.toml` files
 //! that aren't referenced by any `profiles/*.toml`'s `units = [...]` list.
 //! `Workspace::load` only loads referenced units, so orphans are
 //! invisible to `monad plan` / `monad doctor` unless explicitly scanned
@@ -72,8 +72,8 @@ pub fn scan_orphans(root: &Path, wired_paths: &BTreeSet<PathBuf>) -> Vec<PathBuf
 
 /// Convenience wrapper: pull `wired_paths` from a loaded Workspace and
 /// scan for orphans from its root.
-pub fn scan_orphan_unites(workspace: &Workspace) -> Vec<PathBuf> {
-    let wired: BTreeSet<PathBuf> = workspace.unites_by_path.keys().cloned().collect();
+pub fn scan_orphan_units(workspace: &Workspace) -> Vec<PathBuf> {
+    let wired: BTreeSet<PathBuf> = workspace.units_by_path.keys().cloned().collect();
     scan_orphans(&workspace.root, &wired)
 }
 

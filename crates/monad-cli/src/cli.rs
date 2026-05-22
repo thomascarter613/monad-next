@@ -843,26 +843,38 @@ mod tests {
                 verbs.insert(format!("{} {}", name, sub2.get_name()));
             }
         }
+        // Resolve repository-root docs from Cargo's compile-time crate root
+        // instead of relying on the process current working directory.
+        //
+        // `env!("CARGO_MANIFEST_DIR")` is expanded by Rust at compile time
+        // to the package directory for `monad-cli`, which should be:
+        //
+        //   <repo>/crates/monad-cli
+        //
+        // From there, `../..` resolves back to the repository root.
+        // This makes the test stable even if the runtime current directory
+        // changes during test execution.
+        let repo_root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
 
-        // In-tree agent-facing docs. Paths relative to the crate root
-        // (cargo unit-test cwd). External marketing copy is out of scope.
+        // In-tree agent-facing docs. Paths are relative to the repository root.
         let docs = [
-            "../../README.md",
-            "../../CHANGELOG.md",
-            "../../CLAUDE.md",
-            "../../docs/agents.md",
-            "../../docs/configuration.md",
-            "../../docs/deploying.md",
-            "../../docs/plugins.md",
-            "../../docs/adopt-existing-repo.md",
-            "../../docs/new-project.md",
-            "../../skills/monad/SKILL.md",
+            "README.md",
+            "CHANGELOG.md",
+            "CLAUDE.md",
+            "docs/agents.md",
+            "docs/configuration.md",
+            "docs/deploying.md",
+            "docs/plugins.md",
+            "docs/adopt-existing-repo.md",
+            "docs/new-project.md",
+            "skills/monad/SKILL.md",
         ];
 
         let mut failures: Vec<String> = Vec::new();
-        for path in docs {
-            let body = std::fs::read_to_string(path).unwrap_or_else(|e| panic!("read {path}: {e}"));
-            // Two contexts qualify as "invocation":
+        for relative_path in docs {
+            let path = repo_root.join(relative_path);
+            let body = std::fs::read_to_string(&path)
+                .unwrap_or_else(|e| panic!("read {}: {e}", path.display()));
             //   - inside a fenced code block, lines that begin with
             //     `monad ` (after optional `$ ` / `> ` prompt + lead
             //     whitespace) are the user being asked to type the
@@ -900,7 +912,7 @@ mod tests {
                     if !verbs.contains(&one) && !verbs.contains(&two) {
                         failures.push(format!(
                             "{}:{} → `monad {}` — not in CLI subcommand set",
-                            path,
+                            relative_path,
                             line_no + 1,
                             token,
                         ));

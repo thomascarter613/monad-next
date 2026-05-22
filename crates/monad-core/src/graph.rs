@@ -71,14 +71,14 @@ pub fn build(workspace: &Workspace, monad_name: &str) -> Result<ProfileGraph, Gr
         .expect("caller must hand in a monad that belongs to this workspace");
 
     // Unit names included in *this* monad. Only refs within this set are valid.
-    let mut unites_in_profile: BTreeSet<String> = BTreeSet::new();
+    let mut units_in_profile: BTreeSet<String> = BTreeSet::new();
     let mut name_by_ref: BTreeMap<String, String> = BTreeMap::new();
     for unit_ref in &monad.config.units {
         let loaded = workspace
-            .unites_by_path
+            .units_by_path
             .get(std::path::Path::new(unit_ref))
             .expect("workspace load guaranteed this reference resolves");
-        unites_in_profile.insert(loaded.config.name.clone());
+        units_in_profile.insert(loaded.config.name.clone());
         name_by_ref.insert(unit_ref.clone(), loaded.config.name.clone());
     }
 
@@ -89,16 +89,16 @@ pub fn build(workspace: &Workspace, monad_name: &str) -> Result<ProfileGraph, Gr
     let mut deps: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
     let mut dependents: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
 
-    for unit_name in &unites_in_profile {
+    for unit_name in &units_in_profile {
         deps.entry(unit_name.clone()).or_default();
         dependents.entry(unit_name.clone()).or_default();
     }
 
     for unit_ref in &monad.config.units {
-        let loaded = &workspace.unites_by_path[std::path::Path::new(unit_ref)];
+        let loaded = &workspace.units_by_path[std::path::Path::new(unit_ref)];
         let unit_name = &loaded.config.name;
         for dep_name in &loaded.config.depends_on {
-            if !unites_in_profile.contains(dep_name) {
+            if !units_in_profile.contains(dep_name) {
                 return Err(GraphError::UnknownDep {
                     monad: monad_name.to_string(),
                     unit: unit_name.clone(),
@@ -183,7 +183,7 @@ mod tests {
             .join(", ");
         std::fs::write(
             root.join("profiles/prod.toml"),
-            format!("name = \"prod\"\nunites = [{refs_toml}]\n"),
+            format!("name = \"prod\"\nunits = [{refs_toml}]\n"),
         )
         .unwrap();
 
@@ -224,7 +224,7 @@ mod tests {
     }
 
     #[test]
-    fn independent_unites_collapse_into_one_level() {
+    fn independent_units_collapse_into_one_level() {
         let tmp = workspace_with_deps(&[("api", &[]), ("web", &[]), ("worker", &[])]);
         let ws = Workspace::load(tmp.path()).unwrap();
         let graph = build(&ws, "prod").unwrap();
@@ -300,7 +300,7 @@ mod tests {
     }
 
     #[test]
-    fn unit_count_matches_total_unites() {
+    fn unit_count_matches_total_units() {
         let tmp = workspace_with_deps(&[("api", &[]), ("web", &["api"]), ("cron", &["api"])]);
         let ws = Workspace::load(tmp.path()).unwrap();
         let graph = build(&ws, "prod").unwrap();

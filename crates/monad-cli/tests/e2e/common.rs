@@ -17,7 +17,7 @@
 //!
 //! Design notes:
 //!
-//! - **`monad` binary**: resolved via `CARGO_BIN_EXE_profile`, which
+//! - **`monad` binary**: resolved via `CARGO_BIN_EXE_monad`, which
 //!   cargo populates automatically for integration tests in the
 //!   owning crate. No manual build step, always fresh.
 //! - **Materialisation**: every test gets a throwaway tempdir copy
@@ -65,7 +65,7 @@ pub fn vendored_cache_dir() -> PathBuf {
 /// The `monad` binary cargo built for these tests. Fresh on every
 /// `cargo test` invocation — no stale-binary footguns.
 pub fn monad_bin() -> PathBuf {
-    PathBuf::from(env!("CARGO_BIN_EXE_profile"))
+    PathBuf::from(env!("CARGO_BIN_EXE_monad"))
 }
 
 /// Check that `tool` is on PATH; return true if the caller should
@@ -830,15 +830,15 @@ pub mod monorepo_suite {
             "[{}] post-mutation build must succeed.\nstderr: {}",
             spec.fixture, second.stderr
         );
-        let plan_unites = second
+        let plan_units = second
             .json()
             .pointer("/profiles/0/units")
             .and_then(|v| v.as_array())
             .cloned()
             .unwrap_or_default();
 
-        let dep_statuses = unit_task_statuses(&plan_unites, dep, spec.fixture);
-        let dependent_statuses = unit_task_statuses(&plan_unites, dependent, spec.fixture);
+        let dep_statuses = unit_task_statuses(&plan_units, dep, spec.fixture);
+        let dependent_statuses = unit_task_statuses(&plan_units, dependent, spec.fixture);
 
         assert!(
             dep_statuses.iter().all(|s| s == "built"),
@@ -901,15 +901,15 @@ pub mod monorepo_suite {
             "[{}] post-mutation build must succeed.\nstderr: {}",
             spec.fixture, second.stderr
         );
-        let plan_unites = second
+        let plan_units = second
             .json()
             .pointer("/profiles/0/units")
             .and_then(|v| v.as_array())
             .cloned()
             .unwrap_or_default();
 
-        let dep_statuses = unit_task_statuses(&plan_unites, dep, spec.fixture);
-        let dependent_statuses = unit_task_statuses(&plan_unites, dependent, spec.fixture);
+        let dep_statuses = unit_task_statuses(&plan_units, dep, spec.fixture);
+        let dependent_statuses = unit_task_statuses(&plan_units, dependent, spec.fixture);
 
         assert!(
             dep_statuses.iter().all(|s| s == "built"),

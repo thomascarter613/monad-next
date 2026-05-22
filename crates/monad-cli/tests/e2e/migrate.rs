@@ -90,7 +90,7 @@ fn migrate_and_plan(fixture: &str, tool: &str) {
         !profiles.is_empty(),
         "[migrate {tool}] plan emitted zero profiles; the migrator is producing config the planner can't see",
     );
-    let total_unites: usize = profiles
+    let total_units: usize = profiles
         .iter()
         .map(|b| {
             b.get("units")
@@ -100,7 +100,7 @@ fn migrate_and_plan(fixture: &str, tool: &str) {
         })
         .sum();
     assert!(
-        total_unites > 0,
+        total_units > 0,
         "[migrate {tool}] plan reported zero units across {} monad(s); migration didn't wire anything in",
         profiles.len(),
     );
@@ -237,7 +237,7 @@ fn assert_plan_succeeds(workspace: &Path, tool: &str, label: &str) {
         !profiles.is_empty(),
         "[migrate {tool} / {label}] plan emitted zero profiles",
     );
-    let total_unites: usize = profiles
+    let total_units: usize = profiles
         .iter()
         .map(|b| {
             b.get("units")
@@ -247,7 +247,7 @@ fn assert_plan_succeeds(workspace: &Path, tool: &str, label: &str) {
         })
         .sum();
     assert!(
-        total_unites > 0,
+        total_units > 0,
         "[migrate {tool} / {label}] plan reported zero units across {} monad(s)",
         profiles.len(),
     );

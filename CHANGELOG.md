@@ -79,7 +79,7 @@ Initial public release.
 
 - **TOML config** — `monad.toml` (repo defaults: cache, telemetry, execution, toolchain, plugins), `profiles/*.toml` (deployment groupings — environment OR logical layer OR release stage; monad is unopinionated), `unit.toml` (tasks, serve, depends_on, force_independent, toolchain pins, integrations, notifications). `Workspace::load(root)` walks the tree and validates cross-references (duplicate names, dangling unit references, shared-unit semantics, orphan `unit.toml`).
 - **Multi-monad / shared units** — the same unit referenced by multiple profiles is loaded once, produces identical cache keys across profiles, and hits the cache on the second monad's visit in the same `ci` run.
-- **`monad init` flags** — default detects units; `--no-detect` opts out for empty-placeholder behaviour. `--json` output includes `unites_detected`, `toolchain_pins`, `toolchain_conflicts`.
+- **`monad init` flags** — default detects units; `--no-detect` opts out for empty-placeholder behaviour. `--json` output includes `units_detected`, `toolchain_pins`, `toolchain_conflicts`.
 
 ### Language adapters (13)
 

@@ -562,7 +562,7 @@ impl Executor {
                 // nothing to run in this level but we still proceed.
                 let targets: Vec<&LoadedUnit> = level
                     .iter()
-                    .filter_map(|name| self.workspace.unites_by_name.get(name))
+                    .filter_map(|name| self.workspace.units_by_name.get(name))
                     .filter(|loaded| match &opts.unit_filter {
                         None => true,
                         Some(f) => f == &loaded.config.name,
@@ -1521,7 +1521,7 @@ impl Executor {
             };
 
             for unit_ref in &monad.config.units {
-                let loaded = match self.workspace.unites_by_path.get(Path::new(unit_ref)) {
+                let loaded = match self.workspace.units_by_path.get(Path::new(unit_ref)) {
                     Some(l) => l,
                     None => continue,
                 };
@@ -2561,7 +2561,7 @@ pub enum TargetRefError {
     NotFound {
         target: String,
         available_profiles: Vec<String>,
-        available_unites: Vec<String>,
+        available_units: Vec<String>,
     },
 
     #[error("'{target}' is ambiguous — it names both a monad and a unit; rename one")]
@@ -2573,7 +2573,7 @@ pub enum TargetRefError {
 /// both a monad and a unit (ambiguous — rename one).
 pub fn resolve_target(workspace: &Workspace, target: &str) -> Result<TargetRef> {
     let is_profile = workspace.profiles.contains_key(target);
-    let is_unit = workspace.unites_by_name.contains_key(target);
+    let is_unit = workspace.units_by_name.contains_key(target);
     match (is_profile, is_unit) {
         (true, false) => Ok(TargetRef::Monad(target.to_string())),
         (false, true) => Ok(TargetRef::Unit(target.to_string())),
@@ -2584,7 +2584,7 @@ pub fn resolve_target(workspace: &Workspace, target: &str) -> Result<TargetRef> 
         (false, false) => Err(TargetRefError::NotFound {
             target: target.to_string(),
             available_profiles: workspace.profiles.keys().cloned().collect(),
-            available_unites: workspace.unites_by_name.keys().cloned().collect(),
+            available_units: workspace.units_by_name.keys().cloned().collect(),
         }
         .into()),
     }
@@ -2950,7 +2950,7 @@ run = "true"
     }
 
     #[test]
-    fn independent_unites_run_in_same_level_despite_fail_fast() {
+    fn independent_units_run_in_same_level_despite_fail_fast() {
         // 'a' and 'b' have no deps → both in level 0 → both run even
         // with fail_fast. Parallel semantics: we only gate the *next*
         // level, not in-flight units in the current level.
@@ -3044,7 +3044,7 @@ run = "true"
     }
 
     #[test]
-    fn unit_filter_skips_non_matching_unites() {
+    fn unit_filter_skips_non_matching_units() {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
         write(root, "monad.toml", b"");
@@ -3108,7 +3108,7 @@ run = "true"
             TargetRefError::NotFound {
                 target,
                 available_profiles,
-                available_unites,
+                available_units,
             } => {
                 assert_eq!(target, "nothing");
                 assert!(
@@ -3116,8 +3116,8 @@ run = "true"
                     "expected 'prod' in available_profiles, got {available_profiles:?}"
                 );
                 assert!(
-                    available_unites.contains(&"d".to_string()),
-                    "expected 'd' in available_unites, got {available_unites:?}"
+                    available_units.contains(&"d".to_string()),
+                    "expected 'd' in available_units, got {available_units:?}"
                 );
             }
             other => panic!("expected TargetRefError::NotFound, got {other:?}"),
@@ -3293,7 +3293,7 @@ units = ["a", "b"]"#,
     }
 
     #[test]
-    fn independent_unites_execute_in_parallel() {
+    fn independent_units_execute_in_parallel() {
         // Two units that each sleep 250ms. Sequential would take ≥500ms;
         // parallel should finish in ≲350ms. Generous margin to avoid
         // flakes on loaded CI.
@@ -3432,7 +3432,7 @@ run = "true"
         write(
             tmp.path(),
             "profiles/prod.toml",
-            b"name = \"prod\"\nunites = []\n",
+            b"name = \"prod\"\nunits = []\n",
         );
         std::fs::create_dir(tmp.path().join("profiles")).ok(); // idempotent
         let ws = Workspace::load(tmp.path()).unwrap();
@@ -3451,7 +3451,7 @@ run = "true"
         write(
             tmp.path(),
             "profiles/prod.toml",
-            b"name = \"prod\"\nunites = []\n",
+            b"name = \"prod\"\nunits = []\n",
         );
         let ws = Workspace::load(tmp.path()).unwrap();
         assert!(super::container_plan(&ws).is_none());
@@ -3474,7 +3474,7 @@ run = "true"
             write(
                 tmp.path(),
                 "profiles/prod.toml",
-                b"name = \"prod\"\nunites = [\"d\"]\n",
+                b"name = \"prod\"\nunits = [\"d\"]\n",
             );
             write(
                 tmp.path(),
@@ -3550,7 +3550,7 @@ run = "true"
         write(
             tmp.path(),
             "profiles/prod.toml",
-            b"name = \"prod\"\nunites = [\"d\"]\n",
+            b"name = \"prod\"\nunits = [\"d\"]\n",
         );
         write(
             tmp.path(),
@@ -4214,7 +4214,7 @@ run = "true"
     }
 
     #[test]
-    fn install_dedupes_across_unites_in_shared_scope() {
+    fn install_dedupes_across_units_in_shared_scope() {
         // Two units in the same install scope (a JS workspace). Both
         // probe Missing. The executor must serialise on the per-scope
         // OnceLock so install runs exactly once, not once per unit —
@@ -4541,7 +4541,7 @@ run = "printf 'hello from build'"
     }
 
     #[test]
-    fn deploy_kind_filter_skips_unites_without_matching_task() {
+    fn deploy_kind_filter_skips_units_without_matching_task() {
         let tmp = integration_mock_workspace(&[]);
         // No sentinel means the integration won't detect — unit has no deploy task.
         let (exec, _cache) = integration_mock_executor(

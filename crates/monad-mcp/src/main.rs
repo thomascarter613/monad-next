@@ -447,7 +447,7 @@ impl MonadServer {
         // round-tripping an empty ExecutionReport.
         let single_unit_preflight: Option<(String, Vec<String>)> =
             unit_filter.as_ref().and_then(|name| {
-                workspace.unites_by_name.get(name).map(|d| {
+                workspace.units_by_name.get(name).map(|d| {
                     (
                         name.clone(),
                         d.config.integrations.keys().cloned().collect(),

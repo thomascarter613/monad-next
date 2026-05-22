@@ -111,7 +111,7 @@ mod tests {
     #[test]
     fn roundtrips_through_serde() {
         let p = NotificationPayload {
-            schema_version: Notification_PAYLOAD_SCHEMA_VERSION,
+            schema_version: NOTIFICATION_PAYLOAD_SCHEMA_VERSION,
             monad_version: "0.1.0".into(),
             environment: Some("staging".into()),
             trigger: NotificationPayloadTrigger {
@@ -136,7 +136,7 @@ mod tests {
     #[test]
     fn omits_none_fields_from_json() {
         let p = NotificationPayload {
-            schema_version: Notification_PAYLOAD_SCHEMA_VERSION,
+            schema_version: NOTIFICATION_PAYLOAD_SCHEMA_VERSION,
             monad_version: "0.1.0".into(),
             environment: None,
             trigger: NotificationPayloadTrigger {

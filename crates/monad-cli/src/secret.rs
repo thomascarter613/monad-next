@@ -84,12 +84,12 @@ fn resolve_target<'a>(
     };
 
     let unit = workspace
-        .unites_by_path
+        .units_by_path
         .values()
         .find(|d| d.config.name == unit_name)
         .ok_or_else(|| {
             let known: Vec<_> = workspace
-                .unites_by_path
+                .units_by_path
                 .values()
                 .map(|d| d.config.name.clone())
                 .collect();

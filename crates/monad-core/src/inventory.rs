@@ -9,7 +9,7 @@ use serde::Serialize;
 
 use monad_config::Workspace;
 
-use crate::scan_orphan_unites;
+use crate::scan_orphan_units;
 
 #[derive(Debug, Clone, Serialize, JsonSchema)]
 pub struct UnitListOutput {
@@ -51,7 +51,7 @@ pub struct BoxListItem {
 /// Build the unit list for a loaded workspace.
 pub fn unit_list(workspace: &Workspace) -> UnitListOutput {
     let mut units: Vec<UnitListItem> = workspace
-        .unites_by_name
+        .units_by_name
         .values()
         .map(|d| {
             let rel = d.rel.to_string_lossy().to_string();
@@ -71,7 +71,7 @@ pub fn unit_list(workspace: &Workspace) -> UnitListOutput {
         .collect();
     units.sort_by(|a, b| a.name.cmp(&b.name));
 
-    let orphans = scan_orphan_unites(workspace)
+    let orphans = scan_orphan_units(workspace)
         .into_iter()
         .map(|p| p.to_string_lossy().to_string())
         .collect();

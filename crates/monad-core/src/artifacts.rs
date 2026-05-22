@@ -49,7 +49,7 @@ pub fn collect(
     }
 
     let mut out: BTreeMap<String, Vec<PathBuf>> = BTreeMap::new();
-    for (rel, loaded) in &workspace.unites_by_path {
+    for (rel, loaded) in &workspace.units_by_path {
         if let Some(refs) = &monad_unit_refs {
             let rel_str = rel.to_string_lossy().replace('\\', "/");
             if !refs.contains(rel_str.as_str()) {

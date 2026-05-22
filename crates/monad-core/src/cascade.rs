@@ -51,7 +51,7 @@ pub fn compute(
 
     for level in &graph.levels {
         for unit_name in level {
-            let loaded = workspace.unites_by_name.get(unit_name).with_context(|| {
+            let loaded = workspace.units_by_name.get(unit_name).with_context(|| {
                 format!("unit '{unit_name}' referenced by graph but missing from workspace")
             })?;
             let adapter = resolve_adapter(registry, loaded.config.language.as_deref(), &loaded.dir);
@@ -319,7 +319,7 @@ force_independent = true"#,
     }
 
     #[test]
-    fn independent_unites_get_distinct_signatures() {
+    fn independent_units_get_distinct_signatures() {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
         std::fs::create_dir(root.join("profiles")).unwrap();
@@ -372,7 +372,7 @@ force_independent = true"#,
         let graph = build_graph(&ws, "prod").unwrap();
         let reg = AdapterRegistry::builtin();
         let sigs = compute(&ws, &graph, &reg).unwrap();
-        let app = &ws.unites_by_name["app"];
+        let app = &ws.units_by_name["app"];
         let deps = deps_for_key(&app.config, &sigs);
         assert!(deps.is_empty());
     }
