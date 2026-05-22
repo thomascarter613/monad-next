@@ -1,0 +1,7 @@
+{
+  "name": "monad/php-hello",
+  "description": "Tiny PHP fixture for the monad e2e harness.",
+  "type": "project",
+  "license": "MIT",
+  "require": {}
+}

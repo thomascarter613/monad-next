@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 96" role="img" aria-label="monad">
+  <!-- Wordmark "monad" — Geist family with broad fallbacks for the
+       GitHub README renderer (which doesn't ship Geist). -->
+  <text x="10" y="64"
+        font-family="'Geist Variable', 'Geist', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="56" font-weight="600" fill="#1a1814"
+        letter-spacing="-2">monad</text>
+</svg>

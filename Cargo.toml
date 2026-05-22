@@ -1,0 +1,92 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/monad-cli",
+    "crates/monad-core",
+    "crates/monad-config",
+    "crates/monad-cache",
+    "crates/monad-adapters",
+    "crates/monad-toolchain",
+    "crates/monad-watch",
+    "crates/monad-cas-protocol",
+    "crates/monad-plugin",
+    "crates/monad-mcp",
+    "examples/monad-adapter-noop",
+]
+
+[workspace.package]
+version = "0.1.2"
+edition = "2021"
+rust-version = "1.75"
+license = "MIT OR Apache-2.0"
+authors = ["Applied Innovation Corp <hello@appliedinnovationcorp.com"]
+repository = "https://github.com/thomascarter613/monad-next"
+homepage = "https://github.com/thomascarter613/monad-next"
+description = "Governance-grade polyglot repository runtime for native-tool orchestration, safe evolution, and AI-ready context."
+readme = "README.md"
+
+[workspace.dependencies]
+anyhow = "1"
+thiserror = "1"
+clap = { version = "4", features = ["derive", "env"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+toml_edit = "0.22"
+schemars = "1"
+notify = "6"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "fs", "process", "io-util", "signal"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+blake3 = "1"
+walkdir = "2"
+globset = "0.4"
+tar = "0.4"
+indicatif = "0.17"
+tempfile = "3"
+dirs = "5"
+ureq = { version = "2", default-features = false, features = ["tls"] }
+semver = "1"
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "stream"] }
+wiremock = "0.6"
+flate2 = "1"
+sha2 = "0.10"
+base64 = "0.22"
+# object_store gives us S3, Cloudflare R2, MinIO, Backblaze, GCS, Azure
+# Blob, etc. under one async trait. monad-cache wraps it in a small
+# sync `S3Remote` over a dedicated tokio runtime.
+object_store = { version = "0.11", features = ["aws"] }
+bytes = "1"
+futures = "0.3"
+url = "2"
+# Cross-platform OS keychain. Used by `monad login` to stash the cache
+# JWT in Keychain (macOS), kernel keyutils (Linux), or Credential
+# Manager (Windows). Falls back to a 0600 file under
+# ~/.monad/credentials when no keyring backend is available.
+#
+# Linux uses keyutils only (kernel keyring) — NOT secret-service. The
+# combo features (`linux-native-{sync,async}-persistent`) pull
+# `dbus-secret-service`, which adds a `libdbus-1.so` runtime dep + a
+# `libdbus-1-dev` build-time dep that breaks cross-compile to aarch64.
+# The file fallback covers desktop-Linux users who were relying on
+# GNOME Keyring / KWallet — they lose the GUI keychain integration but
+# the JWT still lands somewhere safe (~/.monad/credentials, 0600).
+keyring = { version = "3", default-features = false, features = ["apple-native", "windows-native", "linux-native"] }
+
+# Internal crates (workspace-relative)
+monad-core = { path = "crates/monad-core", version = "0.1.2" }
+monad-config = { path = "crates/monad-config", version = "0.1.2" }
+monad-cache = { path = "crates/monad-cache", version = "0.1.2" }
+monad-adapters = { path = "crates/monad-adapters", version = "0.1.2" }
+monad-toolchain = { path = "crates/monad-toolchain", version = "0.1.2" }
+monad-watch = { path = "crates/monad-watch", version = "0.1.2" }
+monad-cas-protocol = { path = "crates/monad-cas-protocol", version = "0.1.2" }
+monad-plugin = { path = "crates/monad-plugin", version = "0.1.2" }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
+
+[profile.dev]
+debug = 1

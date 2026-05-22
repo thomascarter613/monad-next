@@ -1,0 +1,158 @@
+name: E2E
+
+# End-to-end test suite. Two jobs, mutually exclusive on event:
+#
+#   - `pr-smoke` runs on every PR. Small toolchain footprint (Go +
+#     Node + docker), no network-gated tests. Target < 2 min so PR
+#     authors get fast feedback.
+#
+#   - `full-matrix` runs on every push to main. Installs every
+#     toolchain monad ships an adapter for and sets
+#     MONAD_E2E_NETWORK=1 so the network-gated recipes execute
+#     rather than emitting skip markers. This is the green-state
+#     signal `release.yml` relies on: tag a commit that's already
+#     gone green on main full-matrix and the release flow doesn't
+#     need to re-run the matrix.
+#
+# Separate from `ci.yml` (unit + clippy + fmt + cross-build) because
+# e2e is fatter, slower, and higher-variance — keeping the badges
+# split means `ci.yml` stays the merge gate while this workflow
+# surfaces richer regressions.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+# Cancel in-flight runs for the same ref when a new push lands —
+# saves runner minutes on rapid iteration.
+concurrency:
+  group: e2e-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  pr-smoke:
+    name: e2e smoke
+    # PR-only. Post-merge coverage on main lives in `full-matrix`
+    # below, which exercises a strict superset of what smoke covers.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@1.95.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: e2e-pr-smoke
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+          cache: false # rust-cache above owns target/; go toolchain's
+                       # module cache is fine to rebuild each run.
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # docker is preinstalled on ubuntu-latest — we rely on it for
+      # the container-go smoke. Explicit version print helps when
+      # debugging the occasional runner-image regression.
+      - name: Docker sanity
+        run: docker --version
+
+      # The e2e harness materialises every fixture into a tempdir
+      # and invokes the release-built monad binary. We build once
+      # here + test once; rust-cache keeps target/ warm across runs.
+      - name: cargo test --release --test e2e
+        run: cargo test --release --test e2e --locked
+
+  full-matrix:
+    name: e2e full-matrix
+    # Main pushes only. PR coverage lives in `pr-smoke` above (fast,
+    # narrower toolchain set); release.yml trusts main's green state
+    # on this job rather than re-running the matrix at tag time.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      MONAD_E2E_NETWORK: '1'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@1.95.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: e2e-full-matrix
+
+      # Go.
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+          cache: false
+
+      # Node + the three package managers monad ships adapters for.
+      # setup-node handles npm; pnpm / yarn are explicit.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9'
+      - name: Install yarn
+        run: npm install --global yarn
+
+      # Bun + Deno.
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      # Python + the `build` frontend so python-build fixture's
+      # network-gated tests pass rather than skip.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Python build
+        run: python -m pip install --upgrade pip build
+
+      # Ruby + bundler for rubygems-fetching tests.
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: false # fixture writes its own Gemfile;
+                               # bundler install happens per test
+
+      # PHP + Composer.
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      # Java (for Maven + Gradle).
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Install Maven
+        run: |
+          if ! command -v mvn >/dev/null; then
+            sudo apt-get update && sudo apt-get install -y maven
+          fi
+          mvn -version
+
+      - name: Docker sanity
+        run: docker --version
+
+      - name: cargo test --release --test e2e
+        run: cargo test --release --test e2e --locked

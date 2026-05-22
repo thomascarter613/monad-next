@@ -1,0 +1,18 @@
+[package]
+name = "monad-adapter-noop"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Reference 'noop' monad language adapter — a minimal example of the subprocess plugin protocol"
+publish = false
+
+[[bin]]
+name = "monad-adapter-noop"
+path = "src/main.rs"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true

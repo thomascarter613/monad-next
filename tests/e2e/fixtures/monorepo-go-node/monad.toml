@@ -1,0 +1,4 @@
+# Minimal polyglot monorepo fixture for monad e2e.
+# Empty [defaults] section is valid — everything falls through to
+# built-in defaults. Pre-populated so tests don't need to run
+# `monad init` before exercising plan / ci / cache behaviour.

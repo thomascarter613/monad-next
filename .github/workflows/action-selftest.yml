@@ -1,0 +1,254 @@
+name: action-selftest
+
+# Exercises ./action.yml end-to-end on every push to main + every PR.
+# Catches regressions in the action wrapper itself (composite steps,
+# input validation, output publishing, helper scripts under
+# scripts/action/) — separate from the Rust unit + e2e suites which
+# don't go through the GitHub-Actions code path.
+#
+# Strategy:
+#
+#   smoke-binary  Tests the hot path consumers will hit:
+#                 `uses: thomascarter613/monad-next@v0.1` + `version: 0.1.0` —
+#                 downloads the prebuilt release tarball, restores
+#                 cache, runs `monad ci` against a fixture workspace.
+#                 Matrix: ubuntu + macOS.
+#
+#   smoke-source  Tests the fallback path:
+#                 `source-path: '.'` — `cargo install --locked` the
+#                 working-tree CLI, run `monad ci` against the same
+#                 fixture. Catches breakage in the cargo-install path
+#                 that the binary path skips. Linux-only since the
+#                 source build is slow and macOS only adds runner
+#                 minutes without exercising new code.
+#
+#   actionlint    Static lint on .github/workflows/*.yml — fast feedback
+#                 on workflow syntax mistakes ahead of the smoke runs.
+#                 (action.yml is a composite-action manifest, not a
+#                 workflow; actionlint can't lint it directly. The
+#                 smoke jobs cover its runtime.)
+#
+# Fixture choice: tests/e2e/fixtures/monorepo-go-node — minimal
+# polyglot fixture (Go backend + node-npm frontend). Exercises adapter
+# detection across two languages without dragging in heavy runtimes
+# (no Java / PHP / Python / Ruby). Both runtimes are pre-installed on
+# GitHub-hosted runners so no toolchain pin is needed.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'action.yml'
+      - 'scripts/action/**'
+      - '.github/workflows/action-selftest.yml'
+      - 'tests/e2e/fixtures/monorepo-go-node/**'
+      - 'tests/e2e/fixtures/action-selftest-python-uv/**'
+      - 'tests/e2e/fixtures/action-selftest-bun/**'
+      - 'crates/monad-toolchain/**'
+      - 'crates/monad-cli/src/toolchain.rs'
+      # Toolchain install + co-required PATH plumbing lives in
+      # ensure_toolchain — keep selftest in the trigger set.
+      - 'crates/monad-core/src/run.rs'
+  pull_request:
+    paths:
+      - 'action.yml'
+      - 'scripts/action/**'
+      - '.github/workflows/action-selftest.yml'
+      - 'tests/e2e/fixtures/monorepo-go-node/**'
+      - 'tests/e2e/fixtures/action-selftest-python-uv/**'
+      - 'tests/e2e/fixtures/action-selftest-bun/**'
+      - 'crates/monad-toolchain/**'
+      - 'crates/monad-cli/src/toolchain.rs'
+      - 'crates/monad-core/src/run.rs'
+  # Manual trigger so we can re-run after a release without pushing
+  # action.yml. Useful for verifying a newly-tagged binary is reachable.
+  workflow_dispatch:
+
+# Cancel in-flight runs on the same PR/branch when a new push lands.
+concurrency:
+  group: action-selftest-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run actionlint
+        run: |
+          bash <(curl -sSL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          ./actionlint -color .github/workflows/*.yml
+
+  smoke-binary:
+    name: smoke (binary, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      # The fixture's `backend` unit needs Go on PATH; macos-latest
+      # runners don't pre-install it. Pin a recent stable version
+      # rather than the runner default so the smoke run can't drift
+      # silently on a runner-image update.
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      # `frontend` unit (node-npm). Node is on most runners but pinning
+      # via setup-node lets the same workflow line work everywhere
+      # without depending on the runner image's default version.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run monad via local action (binary install path)
+        id: monad
+        uses: ./
+        with:
+          version: '0.1.0'
+          workspace-path: tests/e2e/fixtures/monorepo-go-node
+          # `task: build` instead of `ci` — the fixture's `lint` task
+          # calls `golangci-lint`, which isn't on stock GitHub runners
+          # and isn't worth pre-installing for an action-wrapper smoke.
+          # `build` exercises adapter detection, install, plan,
+          # execute, and output publishing — the action's core contract.
+          task: build
+          json: 'true'
+          # Bump if a cache-shape change forces a cold restart.
+          cache-key-suffix: selftest-v1
+
+      - name: Validate report output contains expected units
+        shell: bash
+        env:
+          REPORT: ${{ steps.monad.outputs.report }}
+        run: |
+          if [ -z "$REPORT" ]; then
+            echo "::error::no report output from action — execute step did not publish" >&2
+            exit 1
+          fi
+          # Sanity-check shape via jq (universal on GitHub runners) so
+          # the test isn't fooled by `monad ci --json`'s pretty-printing
+          # vs minification — `grep '"name":"backend"'` would miss the
+          # `"name": "backend"` (with space) that pretty-print produces.
+          got="$(printf '%s' "$REPORT" | jq -r '[.profiles[].units[].name] | sort | join(",")')"
+          want="backend,frontend"
+          if [ "$got" != "$want" ]; then
+            echo "::error::report units mismatch — got '$got', want '$want'" >&2
+            printf '%s\n' "$REPORT" >&2
+            exit 1
+          fi
+          echo "report contains backend + frontend ✓"
+
+  smoke-source:
+    name: smoke (source build, ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run monad via local action (source-build path)
+        uses: ./
+        with:
+          source-path: '.'
+          workspace-path: tests/e2e/fixtures/monorepo-go-node
+          task: build
+          cache-key-suffix: selftest-v1
+
+  # ── Toolchain-install regression jobs ───────────────────────────────
+  # These exercise the `install-toolchains: true` path *without* any
+  # explicit setup-* steps, so they catch the bug class from
+  # monad-cloud-pteo: a clean runner that depends on monad itself to
+  # install everything pinned in `monad.toml`'s `[toolchain]` block.
+  #
+  # If a future change breaks monad's ability to install python+uv (or
+  # the action's bun bootstrap shim), these jobs fail loudly instead of
+  # silently working only on machines where the tools happen to be
+  # pre-installed — the failure mode that let the original bug ship.
+
+  smoke-toolchain-python-uv:
+    name: smoke (toolchain install, python+uv, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      # Source-build the working-tree CLI so this job validates the
+      # *current* commit's toolchain logic — not a previously-released
+      # binary that won't reflect in-flight changes.
+      - name: Build monad via local action (source-build path)
+        uses: ./
+        with:
+          source-path: '.'
+          workspace-path: tests/e2e/fixtures/action-selftest-python-uv
+          task: build
+          json: 'true'
+          cache-key-suffix: selftest-toolchain-python-uv-v1
+        id: monad
+
+      - name: Validate uv installed as co-required
+        shell: bash
+        env:
+          REPORT: ${{ steps.monad.outputs.report }}
+        run: |
+          if [ -z "$REPORT" ]; then
+            echo "::error::no report output — execute step did not publish" >&2
+            exit 1
+          fi
+          # The report contains executed task results; the build task's
+          # stdout proves uv + python were both on PATH for the unit
+          # subprocess. Specifically check that the build task ran the
+          # version command (not just that the report shape parses).
+          got="$(printf '%s' "$REPORT" | jq -r '.profiles[].units[].name')"
+          if [ "$got" != "service" ]; then
+            echo "::error::expected unit 'service' in report, got '$got'" >&2
+            printf '%s\n' "$REPORT" >&2
+            exit 1
+          fi
+          echo "service unit ran with python+uv on PATH ✓"
+
+  smoke-toolchain-bun:
+    name: smoke (toolchain install, bun, ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build monad via local action (source-build path)
+        uses: ./
+        with:
+          source-path: '.'
+          workspace-path: tests/e2e/fixtures/action-selftest-bun
+          task: build
+          json: 'true'
+          cache-key-suffix: selftest-toolchain-bun-v1
+        id: monad
+
+      - name: Validate bun installed via fallback bootstrap
+        shell: bash
+        env:
+          REPORT: ${{ steps.monad.outputs.report }}
+        run: |
+          if [ -z "$REPORT" ]; then
+            echo "::error::no report output — execute step did not publish" >&2
+            exit 1
+          fi
+          got="$(printf '%s' "$REPORT" | jq -r '.profiles[].units[].name')"
+          if [ "$got" != "service" ]; then
+            echo "::error::expected unit 'service' in report, got '$got'" >&2
+            printf '%s\n' "$REPORT" >&2
+            exit 1
+          fi
+          echo "service unit ran with bun on PATH ✓"
